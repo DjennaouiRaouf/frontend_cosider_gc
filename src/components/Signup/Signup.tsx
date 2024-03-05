@@ -56,6 +56,7 @@ const Signup: React.FC<any> = () => {
     };
 
 
+
       const handleSubmit = async(e:any) => {
         e.preventDefault();
         const form = e.currentTarget;
@@ -85,13 +86,16 @@ const Signup: React.FC<any> = () => {
                 });
 
       }
+      const redirect = () => {
+        navigate('/')
+      }
     useEffect(() => {
         getFields();
         getDefaultState();
     },[]);
   return (
       <>
-          <Toast ref={toastTopRight} position="top-right" />
+          <Toast ref={toastTopRight} position="top-right" onHide={redirect}/>
         <div className="container-fluid" style={{marginTop: "20px", width: "100%"}}>
 
           <div className=" mb-3" style={{border: "none", background: "transparent"}}>
