@@ -1,121 +1,169 @@
 import * as React from "react";
-import {Galleria} from "primereact/galleria";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {Button, Carousel, Form} from "react-bootstrap";
 import axios from "axios";
-
-type LoginFormProps = {
-  //
-};
+import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../Context/AuthContext/AuthContext";
+import {PermissionContext} from "../Context/PermissionContext/PermissionContext";
+import { InputText } from "primereact/inputtext";
 
 const LoginForm: React.FC<any> = () => {
-  const[images,setImages]=useState<any>({})
-  const getImages = async() => {
+  const [pics,setPics]=useState<any[]>([]);
+  const [validated, setValidated] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
 
-    console.log(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getimg/`)
-      await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getimg/`,{
-            headers: {
 
-                'Content-Type': 'application/json',
 
-            },
+
+
+  const { authenticated,setAuthenticated } = useContext(AuthContext);
+  const { permission,setPermission } = useContext(PermissionContext);
+  const navigate=useNavigate();
+  const getImages = async () => {
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getimg/`,{
+      headers:{
+        "Content-Type":"application/json",
+      }
+    })
+        .then((response) => {
+          setPics(response.data);
+
         })
-            .then((response:any) => {
-              console.log(response.data)
-                setImages(response.data)
+        .catch((error) => {
 
-            })
-            .catch((error:any) => {
+        });
 
-            });
-
-    
   }
-     const itemTemplate = (item:any) => {
-        return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
-    };
-    useEffect(() => {
-        getImages();
 
-    },[]);
+
+
+
+  const authentification = async(e: any) => {
+
+    e.preventDefault();
+    const fd = new FormData();
+    fd.append('username', formData.username);
+    fd.append('password', formData.password);
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/login/`,fd,{
+      withCredentials:true,
+    })
+        .then((response:any) => {
+          setAuthenticated(Cookies.get('token'));
+          const role:string[]=String(Cookies.get('role')).split('|');
+
+          setPermission(role)
+
+          navigate('/home');
+
+
+
+
+
+        })
+        .catch((error:any) => {
+          console.log(error)
+          //dispatch(showAlert({variant:Variants.DANGER,heading:"Connexion",text:error.response.data.message}))
+
+        });
+
+
+
+  }
+
+
+
+  const handleInputChange = (e: any): void => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    getImages();
+
+
+  },[]);
+
   return (
+
       <>
-    <div
-        className="d-flex d-xl-flex align-items-center align-items-xl-center"
-        style={{width: "100%", height: "100%"}}
-    >
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-9 col-lg-12 col-xl-10">
-            <div className="card shadow-lg o-hidden border-0 my-5">
-              <div className="card-body p-0">
-                <div className="row">
-                  <div className="col-lg-6 d-none d-lg-flex">
-                    <div
-                        className="flex-grow-1 bg-login-image"
-                    >
 
-                       <Galleria value={images} style={{ maxWidth: '640px' }} showThumbnails={false} showIndicators item={itemTemplate} />
-                    </div>
 
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="p-5">
-                      <div className="text-center">
-                        <h4 className="text-dark mb-4">Connexion</h4>
-                      </div>
-                      <form className="user">
-                        <div className="mb-3">
-                          <input
-                              id="exampleInputEmail"
-                              className="form-control form-control-user"
-                              type="email"
-                              aria-describedby="emailHelp"
-                              placeholder="Nom d'utilisateur"
-                              name="email"
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <input
-                              id="exampleInputPassword"
-                              className="form-control form-control-user"
-                              type="password"
-                              placeholder="Password"
-                              name="Mot de pass"
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <div className="custom-control custom-checkbox small"/>
-                        </div>
-                        <button
-                            className="btn btn-primary d-block btn-user w-100"
-                            type="submit"
-                            style={{background: "#01703E"}}
-                        >
-                          Connexion
-                        </button>
-                        <hr/>
-                        <hr/>
-                      </form>
-                      <div className="text-center">
-                        <a
-                            className="small"
-                            href="forgot-password.html"
-                            style={{color: "#01703E"}}
-                        >
-                          Créer un nouveau compte&nbsp;
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+
+
+        <div className="col-xl-10 col-xxl-8 container px-4 py-5" style={{borderRadius:"8px",
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "50%",
+          transform: "translateY(-50%)",
+          msTransform: "translateY(-50%)",
+          WebkitTransform: "translateY(-50%)",
+          OTransform: "translateY(-50%)"
+
+        }}>
+          <h1  style={{ textAlign: "center" }}>Gestion Commeriale</h1>
+          <div className="row align-items-center g-lg-5 py-5">
+            <div className="col-lg-7 text-center text-lg-start" >
+              <Carousel className=" d-block" controls={false} interval={2000} fade={true} indicators={true} style={{borderWidth: "1px",borderRadius: "8px"}}>
+                {pics.map((item,index) => (
+                    <Carousel.Item key={index}  style={{borderWidth: "1px",borderRadius: "8px"}}>
+                      <img
+                          src={item.src}
+                          alt={""}
+                          height={400}
+                          className="d-block w-100"
+                          style={{borderWidth: "1px",borderRadius: "8px"}}
+                      />
+
+                    </Carousel.Item>
+                ))}
+              </Carousel>
+
+            </div>
+
+            <div className="col-md-10 col-lg-5 mx-auto">
+
+              <Form className="bg-body-tertiary p-4 p-md-5 border rounded-3 w-100"
+                    noValidate validated={validated}
+                    onSubmit={authentification}>
+                <div className="form-floating mb-5 mt-5">
+                  <span className="p-float-label">
+                      <InputText className="w-100 form-control" name="username" value={formData.username}
+                                 onChange={(e) => handleInputChange(e)}/>
+                      <label htmlFor="username">Nom d'utilisateur</label>
+                  </span>
                 </div>
-              </div>
+                <div className="form-floating mb-5">
+                  <span className="p-float-label">
+                      <InputText className="w-100 form-control" name="password" type='password'
+                                 value={formData.password}
+                                 onChange={(e) => handleInputChange(e)}/>
+                      <label htmlFor="username">Mot de passe</label>
+                  </span>
+                </div>
+
+                <Button type="submit" className="w-100 " style={{background: "#df162c", borderWidth: 0}}>
+                  Connexion</Button>
+                <hr className="my-4"/>
+                <div className="container d-sm-flex justify-content-sm-center w-100">
+                  <a href="/signup" >Créer un nouveau compte</a>
+                </div>
+
+              </Form>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </>
 
-  </>);
+
+  );
 };
 
 export default LoginForm;
