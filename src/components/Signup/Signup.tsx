@@ -5,6 +5,7 @@ import {RefObject, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {Toast} from "primereact/toast";
+import {ProgressSpinner} from "primereact/progressspinner";
 type SignupProps = {
   //
 };
@@ -79,7 +80,7 @@ const Signup: React.FC<any> = () => {
                 .catch((error:any) => {
                     setFormData(defaultState);
                     setConfirmepassword('');
-                    console.log(error)
+
                     toastTopRight.current?.show({ severity: 'error', summary: 'Erreur', detail: JSON.stringify(error.response.data, null, 2) });
 
 
@@ -94,7 +95,30 @@ const Signup: React.FC<any> = () => {
         getDefaultState();
     },[]);
   return (
-      <>
+       <>
+       { fields.length === 0 &&
+          <>
+            <div className="container"style={{
+                height:300,
+                overflow:'hidden',
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: "50%",
+          transform: "translateY(-50%)",
+          msTransform: "translateY(-50%)",
+          WebkitTransform: "translateY(-50%)",
+          OTransform: "translateY(-50%)"
+
+        }}>
+              <ProgressSpinner style={{width: '100%', height: '200px'}} strokeWidth="1" fill="var(--surface-ground)"
+                               animationDuration=".5s"/>
+            </div>
+          </>
+       }
+           {
+               fields.length > 0 &&
+               <>
           <Toast ref={toastTopRight} position="top-right" onHide={redirect}/>
         <div className="container-fluid" style={{marginTop: "20px", width: "100%"}}>
 
@@ -217,6 +241,9 @@ const Signup: React.FC<any> = () => {
         </div>
 
       </>
+
+           }
+           </>
   );
 }
 

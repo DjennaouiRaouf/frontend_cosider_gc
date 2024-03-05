@@ -22,6 +22,21 @@ const Routes: React.FC<any> = () => {
                     )
                 }
             />
+             <Route
+              path="/home"
+              element={
+                  authenticated ? (
+                      <>
+                          <p>Home</p>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
               <Route
               path="/signup"
               element={

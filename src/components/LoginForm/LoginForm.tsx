@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useContext, useEffect, useState} from "react";
+import {RefObject, useContext, useEffect, useRef, useState} from "react";
 import {Button, Carousel, Form} from "react-bootstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -7,6 +7,8 @@ import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../Context/AuthContext/AuthContext";
 import {PermissionContext} from "../Context/PermissionContext/PermissionContext";
 import { InputText } from "primereact/inputtext";
+import {ProgressSpinner} from "primereact/progressspinner";
+import {Toast} from "primereact/toast";
 
 const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
@@ -23,6 +25,7 @@ const LoginForm: React.FC<any> = () => {
   const { authenticated,setAuthenticated } = useContext(AuthContext);
   const { permission,setPermission } = useContext(PermissionContext);
   const navigate=useNavigate();
+  const toastTopRight: RefObject<Toast>  = useRef(null);
   const getImages = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getimg/`,{
       headers:{
@@ -56,8 +59,9 @@ const LoginForm: React.FC<any> = () => {
           const role:string[]=String(Cookies.get('role')).split('|');
 
           setPermission(role)
+          toastTopRight.current?.show({ severity: 'success', summary: 'Succés', detail: 'Utilisateur ajouté' });
 
-          navigate('/home');
+
 
 
 
@@ -65,8 +69,7 @@ const LoginForm: React.FC<any> = () => {
 
         })
         .catch((error:any) => {
-          console.log(error)
-          //dispatch(showAlert({variant:Variants.DANGER,heading:"Connexion",text:error.response.data.message}))
+         toastTopRight.current?.show({ severity: 'error', summary: 'Erreur', detail: JSON.stringify(error.response.data, null, 2) });
 
         });
 
@@ -90,18 +93,21 @@ const LoginForm: React.FC<any> = () => {
 
   },[]);
 
+  const redirect = () => {
+    navigate('/home');
+  }
   return (
 
-      <>
 
+  <>
+    <Toast ref={toastTopRight} position="top-right" onHide={redirect}/>
 
-
-
-        <div className="col-xl-10 col-xxl-8 container px-4 py-5" style={{borderRadius:"8px",
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: "50%",
+    <div className="col-xl-10 col-xxl-8 container px-4 py-5" style={{
+      borderRadius: "8px",
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: "50%",
           transform: "translateY(-50%)",
           msTransform: "translateY(-50%)",
           WebkitTransform: "translateY(-50%)",
