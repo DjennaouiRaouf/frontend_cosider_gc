@@ -1,14 +1,12 @@
 import * as React from "react";
 import {RefObject, useContext, useEffect, useRef, useState} from "react";
-import {Button, Carousel, Form} from "react-bootstrap";
+import {Button, Carousel, Form, Toast, ToastContainer} from "react-bootstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../Context/AuthContext/AuthContext";
 import {PermissionContext} from "../Context/PermissionContext/PermissionContext";
-import { InputText } from "primereact/inputtext";
-import {ProgressSpinner} from "primereact/progressspinner";
-import {Toast} from "primereact/toast";
+
 
 const LoginForm: React.FC<any> = () => {
   const [pics,setPics]=useState<any[]>([]);
@@ -25,7 +23,7 @@ const LoginForm: React.FC<any> = () => {
   const { authenticated,setAuthenticated } = useContext(AuthContext);
   const { permission,setPermission } = useContext(PermissionContext);
   const navigate=useNavigate();
-  const toastTopRight: RefObject<Toast>  = useRef(null);
+
   const getImages = async () => {
     await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getimg/`,{
       headers:{
@@ -42,7 +40,12 @@ const LoginForm: React.FC<any> = () => {
 
   }
 
-
+const [toast,setToast]=useState<any>({
+        shown:false,
+        severity:'',
+        header:'',
+        body:'',
+    });
 
 
   const authentification = async(e: any) => {
@@ -57,19 +60,12 @@ const LoginForm: React.FC<any> = () => {
         .then((response:any) => {
           setAuthenticated(Cookies.get('token'));
           const role:string[]=String(Cookies.get('role')).split('|');
-
           setPermission(role)
-          toastTopRight.current?.show({ severity: 'success', summary: 'Succés', detail: 'Utilisateur ajouté' });
-
-
-
-
-
-
+          setToast({shown:true,severity:'rgb(209,231,221)',header:'Ajout d\'utilisateur',body:'Utilisateur ajouté'})
 
         })
         .catch((error:any) => {
-         toastTopRight.current?.show({ severity: 'error', summary: 'Erreur', detail: JSON.stringify(error.response.data, null, 2) });
+                    setToast({shown:true,severity:'rgb(248,215,218)',header:'Ajout d\'utilisateur',body:JSON.stringify(error.response.data,null,2)})
 
         });
 
@@ -93,39 +89,49 @@ const LoginForm: React.FC<any> = () => {
 
   },[]);
 
-  const redirect = () => {
-    navigate('/home');
+  const close = () => {
+    navigate('/contrat');
   }
   return (
+      <>
+      <ToastContainer
+                      className="p-3"
+                      position={'top-end'}
+                      style={{ zIndex: 1}}
+                    >
+                    <Toast onClose={close}  show={toast.shown} delay={10000} autohide style={{backgroundColor:toast.severity}}>
+                      <Toast.Header>
 
-
-  <>
-    <Toast ref={toastTopRight} position="top-right" onHide={redirect}/>
-
-    <div className="col-xl-10 col-xxl-8 container px-4 py-5" style={{
-      borderRadius: "8px",
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: "50%",
+                        <strong className="me-auto">{toast.header}</strong>
+                      </Toast.Header>
+                      <Toast.Body>{toast.body}</Toast.Body>
+                    </Toast>
+                    </ToastContainer>
+        <div className="col-xl-10 col-xxl-8 container px-4 py-5" style={{
+          borderRadius: "8px",
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "50%",
           transform: "translateY(-50%)",
           msTransform: "translateY(-50%)",
           WebkitTransform: "translateY(-50%)",
           OTransform: "translateY(-50%)"
 
         }}>
-          <h1  style={{ textAlign: "center" }}>Gestion Commeriale</h1>
+          <h1 style={{textAlign: "center"}}>Gestion Commerciale</h1>
           <div className="row align-items-center g-lg-5 py-5">
-            <div className="col-lg-7 text-center text-lg-start" >
-              <Carousel className=" d-block" controls={false} interval={2000} fade={true} indicators={true} style={{borderWidth: "1px",borderRadius: "8px"}}>
-                {pics.map((item,index) => (
-                    <Carousel.Item key={index}  style={{borderWidth: "1px",borderRadius: "8px"}}>
+            <div className="col-lg-7 text-center text-lg-start">
+              <Carousel className="w-100 d-block" controls={false} interval={2000} fade={true} indicators={true}
+                        style={{borderWidth: "1px", borderRadius: "8px"}}>
+                {pics.map((item, index) => (
+                    <Carousel.Item key={index} style={{borderWidth: "1px", borderRadius: "8px"}}>
                       <img
                           src={item.src}
                           alt={""}
-                          height={400}
+                          height={500}
                           className="d-block w-100"
-                          style={{borderWidth: "1px",borderRadius: "8px"}}
+                          style={{borderWidth: "1px", borderRadius: "8px"}}
                       />
 
                     </Carousel.Item>
@@ -136,36 +142,50 @@ const LoginForm: React.FC<any> = () => {
 
             <div className="col-md-10 col-lg-5 mx-auto">
 
-              <Form className="bg-body-tertiary p-4 p-md-5 border rounded-3 w-100"
+              <Form className="bg-body-tertiary p-4 p-md-5 border rounded-3"
                     noValidate validated={validated}
                     onSubmit={authentification}>
-                <div className="form-floating mb-5 mt-5">
-                  <span className="p-float-label">
-                      <InputText className="w-100 form-control" name="username" value={formData.username}
-                                 onChange={(e) => handleInputChange(e)}/>
-                      <label htmlFor="username">Nom d'utilisateur</label>
-                  </span>
+                <div className="form-floating mb-3">
+                  <Form.Group className="w-100" controlId="validation1">
+                    <Form.Control
+                        name="username"
+                        required
+                        className="w-100"
+                        type="text"
+                        placeholder="Nom d'utilisateur" value={formData.username}
+                        onChange={(e) => handleInputChange(e)}
+                    />
+
+                  </Form.Group>
+
+
                 </div>
-                <div className="form-floating mb-5">
-                  <span className="p-float-label">
-                      <InputText className="w-100 form-control" name="password" type='password'
-                                 value={formData.password}
-                                 onChange={(e) => handleInputChange(e)}/>
-                      <label htmlFor="username">Mot de passe</label>
-                  </span>
+                <div className="form-floating mb-3">
+                  <Form.Group className="w-100" controlId="validation2">
+                    <Form.Control
+                        name="password"
+                        required
+                        className="w-100"
+                        type="password"
+                        placeholder="Mot de passe" value={formData.password}
+                        onChange={(e) => handleInputChange(e)}
+                    />
+                  </Form.Group>
+
+
                 </div>
 
-                <Button type="submit" className="w-100 " style={{background: "#df162c", borderWidth: 0}}>
+                <Button type="submit" className="w-100" style={{background: "#df162c", borderWidth: 0}}>
                   Connexion</Button>
                 <hr className="my-4"/>
-                <div className="container d-sm-flex justify-content-sm-center w-100">
-                  <a href="/signup" >Créer un nouveau compte</a>
-                </div>
-
+                  <div className="container d-sm-flex justify-content-sm-center w-100">
+                      <a href="/signup">Créer un nouveau compte</a>
+                  </div>
               </Form>
             </div>
           </div>
         </div>
+
       </>
 
 

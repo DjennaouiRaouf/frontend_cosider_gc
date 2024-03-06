@@ -4,6 +4,9 @@ import LoginForm from "../../LoginForm/LoginForm";
 import {AuthContext} from "../AuthContext/AuthContext";
 import {PermissionContext} from "../PermissionContext/PermissionContext";
 import Signup from "../../Signup/Signup";
+import Home from "../../Home/Home";
+import Contrat from "../../Contrat/Contrat";
+import NavigationBar from "../../NavigationBar/NavigationBar";
 
 const Routes: React.FC<any> = () => {
 
@@ -18,16 +21,17 @@ const Routes: React.FC<any> = () => {
                     !authenticated ? (
                         <LoginForm/>
                     ) : (
-                        <Navigate to="/home"/>
+                        <Navigate to="/contrat"/>
                     )
                 }
             />
              <Route
-              path="/home"
+              path="/contrat"
               element={
                   authenticated ? (
                       <>
-                          <p>Home</p>
+                          <NavigationBar/>
+                          <Contrat/>
 
 
 
