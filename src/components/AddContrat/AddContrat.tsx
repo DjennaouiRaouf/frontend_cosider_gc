@@ -21,7 +21,6 @@ const AddContrat: React.FC<any> = () => {
     const [defaultState,setDefaultState]=useState<any>({});
     const [formData, setFormData] = useState<any>({});
  const opt:any[] = [
-
         {
             value: false,
             label: 'Non',
