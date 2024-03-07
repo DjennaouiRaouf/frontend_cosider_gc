@@ -5,16 +5,18 @@ interface Obj {
 }
 export interface AddDataModalState {
     showAddContratForm:boolean;
+    showAddClientForm:boolean;
 
 }
 
 const initialState: AddDataModalState = {
     showAddContratForm:false,
+    showAddClientForm:false,
 
 };
 
 export const AddDataModal = createSlice({
-    name: "AddDG",
+    name: "Add",
     initialState,
     reducers: {
         showAddContrat: (state) => {
@@ -25,12 +27,23 @@ export const AddDataModal = createSlice({
         hideAddContrat: (state) => {
             state.showAddContratForm=false
         },
+        
+           showAddClient: (state) => {
+
+            state.showAddClientForm=true
+
+        },
+        hideAddClient: (state) => {
+            state.showAddClientForm=false
+        },
+    
     
 
 
     }
 });
 
-export const { showAddContrat,hideAddContrat} = AddDataModal.actions;
+export const { showAddContrat,hideAddContrat,
+showAddClient,hideAddClient} = AddDataModal.actions;
 
 export default AddDataModal.reducer;

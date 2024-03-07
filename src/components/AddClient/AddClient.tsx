@@ -4,18 +4,16 @@ import {Typeahead} from "react-bootstrap-typeahead";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../Store/Store";
-import {hideAddContrat} from "../Slices/AddModalSlices";
+import {hideAddClient} from "../Slices/AddModalSlices";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {Transform} from "../Utils/Utils";
 
-type AddContratProps = {
-  //
-};
 
-const AddContrat: React.FC<any> = () => {
+
+const AddClient: React.FC<any> = () => {
      const [validated, setValidated] = useState(false);
-    const { showAddContratForm } = useSelector((state: RootState) => state.addDataModalReducer);
+    const { showAddClientForm } = useSelector((state: RootState) => state.addDataModalReducer);
 
     const dispatch = useDispatch();
     const [fields,setFields]=useState<any[]>([]);
@@ -48,7 +46,7 @@ const AddContrat: React.FC<any> = () => {
 
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/contrataddform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/clientaddform/`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -78,7 +76,7 @@ const AddContrat: React.FC<any> = () => {
         if (form.checkValidity()) {
             setValidated(false)
 
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addcontract/`,Transform(formData),{
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addclient/`,Transform(formData),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
                     'Content-Type': 'application/json',
@@ -115,7 +113,7 @@ const AddContrat: React.FC<any> = () => {
 
     },[]);
     const handleClose = () => {
-        dispatch(hideAddContrat())
+        dispatch(hideAddClient())
 
     }
     const handleChange = (ref:any, op:any) => {
@@ -137,11 +135,11 @@ const AddContrat: React.FC<any> = () => {
 
   return (
       <>
-         <Modal show={showAddContratForm} onHide={handleClose} size={"xl"}>
+         <Modal show={showAddClientForm} onHide={handleClose} size={"xl"}>
               <Form
                       noValidate validated={validated} onSubmit={handleSubmit} >
         <Modal.Header closeButton>
-          <Modal.Title>Ajouter un contrat ou un bon de commande</Modal.Title>
+          <Modal.Title>Ajouter un client</Modal.Title>
         </Modal.Header>
           <Modal.Body>
               <div className="container-fluid">
@@ -268,4 +266,4 @@ const AddContrat: React.FC<any> = () => {
   );
 };
 
-export default AddContrat;
+export default AddClient;

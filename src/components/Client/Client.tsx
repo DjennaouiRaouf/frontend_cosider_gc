@@ -11,10 +11,10 @@ import numeral from "numeral";
 import {Button,Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
-import {showAddContrat} from "../Slices/AddModalSlices";
-import AddContrat from "../AddContrat/AddContrat";
-import {showSearchContrat} from "../Slices/SearchModalSlices";
-import SearchContrat from "../SearchContrat/SearchContrat";
+import {showAddClient} from "../Slices/AddModalSlices";
+
+import {showSearchClient} from "../Slices/SearchModalSlices";
+import AddClient from "../AddClient/AddClient";
 
 
 
@@ -39,7 +39,7 @@ const InfoRenderer: React.FC<any> = (props) => {
 
 };
 
-const Contrat: React.FC<any> = () => {
+const Client: React.FC<any> = () => {
   const[fields,setFields]=useState<any[]>([]);
   const[data,setData]=useState<any[]>([]);
   const [searchParams] = useSearchParams();
@@ -85,7 +85,7 @@ const Contrat: React.FC<any> = () => {
 
 
     const getData = async(url:string) => {
-       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getcontract/${url}`,{
+       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getclient/${url}`,{
       headers: {
         //Authorization: `Token ${Cookies.get('token')}`,
         'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const Contrat: React.FC<any> = () => {
 
 
   const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/contratlistform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/clientlistform/`,{
             headers: {
                 'Content-Type': 'application/json',
 
@@ -155,17 +155,17 @@ const Contrat: React.FC<any> = () => {
 
     const dispatch=useDispatch();
     const addC = () => {
-      dispatch(showAddContrat())
+      dispatch(showAddClient())
     }
       const searchC = () => {
-      dispatch(showSearchContrat())
+      dispatch(showSearchClient())
     }
+
 
   return (
       <>
           <>
-            <AddContrat/>
-            <SearchContrat/>
+            <AddClient/>
           </>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
@@ -173,7 +173,7 @@ const Contrat: React.FC<any> = () => {
                       <div className="container-fluid">
                           <div className="card shadow">
                               <div className="card-header py-3">
-                                  <p className="text-primary m-0 fw-bold">Nos Contrats</p>
+                                  <p className="text-primary m-0 fw-bold">Nos Clients</p>
                               </div>
                               <div className="card-body">
                                   <div className="row d-xxl-flex justify-content-xxl-center mb-4">
@@ -223,7 +223,7 @@ const Contrat: React.FC<any> = () => {
                                           <div className="btn-group" role="group">
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={addC}>
-                                                  Nouveau Contrat
+                                                  Nouveau Client
                                               </button>
                                               <button className="btn btn-primary" type="button"style={{background: "#df162c", borderWidth: 0}} onClick={searchC}>
                                                   Rechercher
@@ -290,4 +290,4 @@ const Contrat: React.FC<any> = () => {
   );
 };
 
-export default Contrat;
+export default Client;

@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AddDataModalReducer from "../Slices/ModalSlices";
-
+import AddDataModalReducer from "../Slices/AddModalSlices";
+import SearchDataModalReducer from "../Slices/SearchModalSlices";
 const store = configureStore({
     reducer: {
         addDataModalReducer: AddDataModalReducer,
+        searchDataModalReducer: SearchDataModalReducer,
     }
 });
 

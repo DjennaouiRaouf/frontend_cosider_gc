@@ -4,9 +4,9 @@ import LoginForm from "../../LoginForm/LoginForm";
 import {AuthContext} from "../AuthContext/AuthContext";
 import {PermissionContext} from "../PermissionContext/PermissionContext";
 import Signup from "../../Signup/Signup";
-import Home from "../../Home/Home";
 import Contrat from "../../Contrat/Contrat";
 import NavigationBar from "../../NavigationBar/NavigationBar";
+import Client from "../../Client/Client";
 
 const Routes: React.FC<any> = () => {
 
@@ -32,6 +32,22 @@ const Routes: React.FC<any> = () => {
                       <>
                           <NavigationBar/>
                           <Contrat/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+              <Route
+              path="/client"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <Client/>
 
 
 

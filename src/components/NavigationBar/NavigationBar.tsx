@@ -74,7 +74,7 @@ const NavigationBar: React.FC<any> = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/contrat">Contrats</Nav.Link>
-                        <Nav.Link href="/clients/">Clients</Nav.Link>
+                        <Nav.Link href="/client">Clients</Nav.Link>
                         <Nav.Link href="/bonlivraison">Bons de livraison</Nav.Link>
                         <Nav.Link href="/factures">factures</Nav.Link>
                     </Nav>
