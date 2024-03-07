@@ -15,6 +15,7 @@ import {showAddClient} from "../Slices/AddModalSlices";
 
 import {showSearchClient} from "../Slices/SearchModalSlices";
 import AddClient from "../AddClient/AddClient";
+import SearchClient from "../SearchClient/SearchClient";
 
 
 
@@ -165,7 +166,8 @@ const Client: React.FC<any> = () => {
   return (
       <>
           <>
-            <AddClient/>
+              <AddClient/>
+              <SearchClient/>
           </>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
