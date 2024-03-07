@@ -31,6 +31,7 @@ const InfoRenderer: React.FC<any> = (props) => {
 const DQE: React.FC<any> = () => {
   const[fields,setFields]=useState<any[]>([]);
   const[data,setData]=useState<any[]>([]);
+  const[contrat,setContrat]=useState<string>('');
   const [searchParams] = useSearchParams();
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
     const gridRef = useRef(null);
@@ -149,13 +150,44 @@ const DQE: React.FC<any> = () => {
       const searchD = () => {
 
     }
+    const [display, setDisplay] = useState(true);
 
-
+  const hide = () => setDisplay(false);
+  const show = () => setDisplay(true);
+  const valider = () => {
+      setContrat('123');
+    hide();
+  }
   return (
       <>
-          <>
+          {
+              ! contrat &&
+              <>
 
-          </>
+      <Modal
+        show={display}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header >
+          <Modal.Title>Saisir le numero du contrat</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" style={{background: "#df162c", borderWidth: 0}} onClick={valider}>
+            Envoyer
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+              </>
+          }
+          {
+
+              contrat &&
+
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
@@ -274,7 +306,7 @@ const DQE: React.FC<any> = () => {
                   </footer>
               </div>
           </div>
-
+        }
       </>
   );
 };
