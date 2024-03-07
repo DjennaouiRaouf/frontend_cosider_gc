@@ -7,6 +7,7 @@ import Signup from "../../Signup/Signup";
 import Contrat from "../../Contrat/Contrat";
 import NavigationBar from "../../NavigationBar/NavigationBar";
 import Client from "../../Client/Client";
+import DQE from "../../DQE/DQE";
 
 const Routes: React.FC<any> = () => {
 
@@ -41,6 +42,23 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
+                         <Route
+              path="/dqe"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <DQE/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
               <Route
               path="/client"
               element={

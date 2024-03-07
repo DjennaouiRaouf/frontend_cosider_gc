@@ -75,6 +75,7 @@ const NavigationBar: React.FC<any> = () => {
                     <Nav className="me-auto">
                         <Nav.Link href="/contrat">Contrats</Nav.Link>
                         <Nav.Link href="/client">Clients</Nav.Link>
+                        <Nav.Link href="/dqe">DQE</Nav.Link>
                         <Nav.Link href="/bonlivraison">Bons de livraison</Nav.Link>
                         <Nav.Link href="/factures">factures</Nav.Link>
                     </Nav>
