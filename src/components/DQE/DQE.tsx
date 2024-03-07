@@ -155,7 +155,7 @@ const DQE: React.FC<any> = () => {
   const hide = () => setDisplay(false);
   const show = () => setDisplay(true);
   const valider = () => {
-      setContrat('123');
+      setContrat(
     hide();
   }
   return (
