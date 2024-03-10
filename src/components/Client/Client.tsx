@@ -12,7 +12,7 @@ import {Button,Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
 import {showAddClient} from "../Slices/AddModalSlices";
-
+import Cookies from "js-cookie";
 import {showSearchClient} from "../Slices/SearchModalSlices";
 import AddClient from "../AddClient/AddClient";
 import SearchClient from "../SearchClient/SearchClient";
@@ -47,7 +47,7 @@ const Client: React.FC<any> = () => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
     const gridRef = useRef(null);
 
-       const defaultColDefs: ColDef = {
+    const defaultColDefs: ColDef = {
     sortable: true,
     resizable: true,
     minWidth: 200,
@@ -88,7 +88,7 @@ const Client: React.FC<any> = () => {
     const getData = async(url:string) => {
        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getclient/${url}`,{
       headers: {
-        //Authorization: `Token ${Cookies.get('token')}`,
+        Authorization: `Token ${Cookies.get('token')}`,
         'Content-Type': 'application/json',
 
       },

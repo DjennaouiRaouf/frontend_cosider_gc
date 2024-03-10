@@ -1,16 +1,17 @@
 import * as React from "react";
 import axios from "axios";
 import {useEffect, useRef, useState} from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {ColDef} from "ag-grid-community";
 import numeral from "numeral";
-import {Button,Form, Modal} from "react-bootstrap";
-import {Typeahead} from "react-bootstrap-typeahead";
+import Cookies from "js-cookie";
 import {useDispatch} from "react-redux";
+import AddDQE from "../AddDQE/AddDQE";
+import {showAddDQE} from "../Slices/AddModalSlices";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -34,9 +35,10 @@ const DQE: React.FC<any> = () => {
   const[contrat,setContrat]=useState<string>('');
   const [searchParams] = useSearchParams();
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
-    const gridRef = useRef(null);
+  const gridRef = useRef(null);
+  const { cid } = useParams();
 
-       const defaultColDefs: ColDef = {
+  const defaultColDefs: ColDef = {
     sortable: true,
     resizable: true,
     minWidth: 200,
@@ -75,19 +77,16 @@ const DQE: React.FC<any> = () => {
 
 
     const getData = async(url:string) => {
-       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getdqe/${url}`,{
+        const contrat_id:string=encodeURIComponent(String(cid));
+       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getdqe/?contrat=${contrat_id}${url.replace('?',"&")}`,{
       headers: {
-        //Authorization: `Token ${Cookies.get('token')}`,
+        Authorization: `Token ${Cookies.get('token')}`,
         'Content-Type': 'application/json',
 
       },
     })
         .then((response:any) => {
-
           setData(response.data);
-
-
-
         })
         .catch((error:any) => {
 
@@ -145,56 +144,24 @@ const DQE: React.FC<any> = () => {
 
     const dispatch=useDispatch();
     const addD = () => {
+         dispatch(showAddDQE())
 
     }
       const searchD = () => {
 
     }
-    const [display, setDisplay] = useState(true);
 
-  const hide = () => setDisplay(false);
-  const show = () => setDisplay(true);
-  const valider = () => {
-      setContrat(
-    hide();
-  }
+
   return (
       <>
-          {
-              ! contrat &&
-              <>
-
-      <Modal
-        show={display}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header >
-          <Modal.Title>Saisir le numero du contrat</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" style={{background: "#df162c", borderWidth: 0}} onClick={valider}>
-            Envoyer
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-              </>
-          }
-          {
-
-              contrat &&
-
+          <AddDQE/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
                       <div className="container-fluid">
                           <div className="card shadow">
                               <div className="card-header py-3">
-                                  <p className="text-primary m-0 fw-bold">DQE du Contrat N° </p>
+                                  <p className="text-primary m-0 fw-bold">DQE du Contrat N° {cid} </p>
                               </div>
                               <div className="card-body">
                                   <div className="row d-xxl-flex justify-content-xxl-center mb-4">
@@ -306,7 +273,7 @@ const DQE: React.FC<any> = () => {
                   </footer>
               </div>
           </div>
-        }
+
       </>
   );
 };

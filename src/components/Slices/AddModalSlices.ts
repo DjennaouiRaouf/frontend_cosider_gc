@@ -6,12 +6,14 @@ interface Obj {
 export interface AddDataModalState {
     showAddContratForm:boolean;
     showAddClientForm:boolean;
+    showAddDQEForm:boolean;
 
 }
 
 const initialState: AddDataModalState = {
     showAddContratForm:false,
     showAddClientForm:false,
+    showAddDQEForm:false,
 
 };
 
@@ -37,13 +39,23 @@ export const AddDataModal = createSlice({
             state.showAddClientForm=false
         },
     
-    
+         showAddDQE: (state) => {
+
+            state.showAddDQEForm=true
+
+        },
+        hideAddDQE: (state) => {
+            state.showAddDQEForm=false
+        },
+
+
 
 
     }
 });
 
 export const { showAddContrat,hideAddContrat,
-showAddClient,hideAddClient} = AddDataModal.actions;
+showAddClient,hideAddClient,
+showAddDQE,hideAddDQE} = AddDataModal.actions;
 
 export default AddDataModal.reducer;

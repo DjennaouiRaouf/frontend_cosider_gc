@@ -8,6 +8,7 @@ import Contrat from "../../Contrat/Contrat";
 import NavigationBar from "../../NavigationBar/NavigationBar";
 import Client from "../../Client/Client";
 import DQE from "../../DQE/DQE";
+import DQEParams from "../../DQE/DQEParams";
 
 const Routes: React.FC<any> = () => {
 
@@ -26,6 +27,8 @@ const Routes: React.FC<any> = () => {
                     )
                 }
             />
+
+
              <Route
               path="/contrat"
               element={
@@ -42,8 +45,25 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
-                         <Route
+               <Route
               path="/dqe"
+              element={
+                  authenticated ? (
+                      <>
+                          <DQEParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+
+                         <Route
+              path="/dqe/liste/:cid"
               element={
                   authenticated ? (
                       <>
