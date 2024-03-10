@@ -88,13 +88,15 @@ const AddDQE: React.FC<any> = () => {
  const handleSubmit = async(e: any) => {
         e.preventDefault();
         const form = e.currentTarget;
-        console.log(formData)
+        const formDataObject= Transform(formData)
+        console.log(selectedRow)
 
 
         if (form.checkValidity()) {
             setValidated(false)
 
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addclient/`,Transform(formData),{
+            /*
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/adddqe/`,Transform(formData),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
                     'Content-Type': 'application/json',
@@ -110,6 +112,7 @@ const AddDQE: React.FC<any> = () => {
                 .catch((error:any) => {
                 });
 
+             */
 
 
 
@@ -150,7 +153,7 @@ const AddDQE: React.FC<any> = () => {
 
 
     };
-    const [selectedRows, setSelectedRows] = useState<any[]>([]);
+    const [selectedRow, setSelectedRow] = useState<any[]>([]);
     const gridRef = useRef(null);
 
     const defaultColDefs: ColDef = {
@@ -165,6 +168,7 @@ const AddDQE: React.FC<any> = () => {
         const gridOptions:any = {
     pagination: true,
     defaultColDef:defaultColDefs,
+    rowSelection:'single',
     multiSortKey:'ctrl',
     animateRows:true,
   components: {
@@ -191,7 +195,7 @@ const AddDQE: React.FC<any> = () => {
   };
         const[data,setData]=useState<any[]>([]);
         const[cols,setCols]=useState<any[]>([])
-        const[selectedRow,setSelectedRow]=useState<any>({});
+
   const getCols = async(url:string) => {
 
       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/pprodlistform/`,{
@@ -213,7 +217,6 @@ const AddDQE: React.FC<any> = () => {
 
     }
  const getData = async() => {
-      console.log(formData)
        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getpprod/?unite=${formData['unite'][0]?.value||''}&produit=${formData['produit'][0]?.value || ''}`,{
       headers: {
         Authorization: `Token ${Cookies.get('token')}`,
@@ -241,6 +244,7 @@ const AddDQE: React.FC<any> = () => {
     },[]);
      const handleRowClick = (event: any) => {
         setSelectedRow(event.data);
+        console.log(event.data)
 
   };
 
