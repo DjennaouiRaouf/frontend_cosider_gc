@@ -14,22 +14,13 @@ import 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {ColDef} from "ag-grid-community";
+import {useParams} from "react-router-dom";
 
+interface AddDQEProps {
+    refresh:()=>void,
 
-const InfoRenderer: React.FC<any> = (props) => {
-  const { value } = props;
-
-  switch (props.column.colId) {
-
-    case 'prix_unitaire' :
-      return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
-
-    default:
-      return <span>{value}</span>
-  }
-
-};
-const AddDQE: React.FC<any> = () => {
+}
+const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
      const [validated, setValidated] = useState(false);
     const { showAddDQEForm } = useSelector((state: RootState) => state.addDataModalReducer);
 
@@ -37,15 +28,15 @@ const AddDQE: React.FC<any> = () => {
     const [fields,setFields]=useState<any[]>([]);
     const [defaultState,setDefaultState]=useState<any>({});
     const [formData, setFormData] = useState<any>({});
- const opt:any[] = [
-        {
-            value: false,
-            label: 'Non',
-        },
-        {
-            value: true,
-            label: 'Oui',
-        },
+    const opt:any[] = [
+            {
+                value: false,
+                label: 'Non',
+            },
+            {
+                value: true,
+                label: 'Oui',
+            },
 
     ];
 
@@ -85,18 +76,15 @@ const AddDQE: React.FC<any> = () => {
 
     }
 
+    const { cid } = useParams();
  const handleSubmit = async(e: any) => {
         e.preventDefault();
         const form = e.currentTarget;
-        const formDataObject= Transform(formData)
-        console.log(selectedRow)
-
-
+        formData['contrat']=cid
+        const formDataObject:any=Object.assign({}, formData)
         if (form.checkValidity()) {
             setValidated(false)
-
-            /*
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/adddqe/`,Transform(formData),{
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/adddqe/`,Transform(formDataObject),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
                     'Content-Type': 'application/json',
@@ -105,17 +93,14 @@ const AddDQE: React.FC<any> = () => {
 
             })
                 .then((response:any) => {
-
+                    refresh();
                     setFormData(defaultState);
+                    handleClose();
 
                 })
                 .catch((error:any) => {
+
                 });
-
-             */
-
-
-
 
 
         }
@@ -134,11 +119,12 @@ const AddDQE: React.FC<any> = () => {
 
     },[]);
     const handleClose = () => {
+
         dispatch(hideAddDQE())
 
     }
     const handleChange = (ref:any, op:any) => {
-        if(op.length ===1 ){
+        if(op.length > 0 ){
             setFormData({
                 ...formData,
                 [ref]: op,
@@ -153,101 +139,6 @@ const AddDQE: React.FC<any> = () => {
 
 
     };
-    const [selectedRow, setSelectedRow] = useState<any[]>([]);
-    const gridRef = useRef(null);
-
-    const defaultColDefs: ColDef = {
-    sortable: true,
-    resizable: true,
-    minWidth: 200,
-    autoHeight: true, wrapText: true,
-    cellStyle: {textAlign: 'start', border: "none"},
-
-  };
-
-        const gridOptions:any = {
-    pagination: true,
-    defaultColDef:defaultColDefs,
-    rowSelection:'single',
-    multiSortKey:'ctrl',
-    animateRows:true,
-  components: {
-      InfoRenderer: InfoRenderer,
-    },
-
-
-    localeText: {
-      // Default pagination text
-      page: 'Page',
-      to: 'à',
-      of: 'sur',
-      nextPage: 'Suivant',
-      lastPage: 'Dernier',
-      firstPage: 'Premier',
-      previousPage: 'Precedent',
-
-
-      loadingOoo: 'Chargement...',
-      noRowsToShow: 'Pas de Données',
-
-      // Add more custom texts as needed
-    },
-  };
-        const[data,setData]=useState<any[]>([]);
-        const[cols,setCols]=useState<any[]>([])
-
-  const getCols = async(url:string) => {
-
-      await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/pprodlistform/`,{
-            headers: {
-                'Content-Type': 'application/json',
-
-            },
-        })
-            .then((response:any) => {
-
-                 setCols(response.data.fields)
-
-
-
-            })
-            .catch((error:any) => {
-
-            });
-
-    }
- const getData = async() => {
-       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getpprod/?unite=${formData['unite'][0]?.value||''}&produit=${formData['produit'][0]?.value || ''}`,{
-      headers: {
-        Authorization: `Token ${Cookies.get('token')}`,
-        'Content-Type': 'application/json',
-
-      },
-    })
-        .then((response:any) => {
-
-          setData(response.data);
-
-
-
-        })
-        .catch((error:any) => {
-
-        });
-
-
-  }
-
-
-     useEffect(() => {
-        getCols('');
-    },[]);
-     const handleRowClick = (event: any) => {
-        setSelectedRow(event.data);
-        console.log(event.data)
-
-  };
-
 
   return (
       <>
@@ -292,13 +183,12 @@ const AddDQE: React.FC<any> = () => {
                                                       field.type === "PrimaryKeyRelatedField" ?
                                                           <>
                                                               <Typeahead
-
+                                                                  multiple={false}
                                                                   labelKey={"label"}
                                                                   onChange={(o) => handleChange(field.name, o)}
                                                                   id={field.name}
                                                                   inputProps={{required: field.required}}
-
-                                                                  selected={formData[field.name] || []}
+                                                                  selected={formData[field.name] || [] }
                                                                   options={field.queryset}
 
                                                               />
@@ -340,7 +230,7 @@ const AddDQE: React.FC<any> = () => {
                                                                           className="w-100"
                                                                           type="number"
                                                                           value={formData[field.name] || 0}
-
+                                                                          step={0.01}
                                                                           onChange={(e) => handleInputChange(e)}
                                                                       />
 
@@ -362,26 +252,12 @@ const AddDQE: React.FC<any> = () => {
                                       ))}
 
                                   </div>
-                        <Button variant="primary" style={{background: "#df162c", borderWidth: 0}} onClick={getData}>
-                          Rechercher les prix
-                        </Button>
+
+
                               </div>
                           </div>
 
-                          <div
-                              id="dataTable"
-                              className="table-responsive table mt-2 ag-theme-alpine"
-                              role="grid"
-                              aria-describedby="dataTable_info"
-                              style={{height: 500}}
 
-                          >
-                              <AgGridReact ref={gridRef}
-                                           rowData={data} columnDefs={cols}
-                                           gridOptions={gridOptions}
-                                           onRowClicked={handleRowClick}
-                              />
-                          </div>
                       </div>
 
 

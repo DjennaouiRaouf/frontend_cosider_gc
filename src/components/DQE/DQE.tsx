@@ -124,6 +124,7 @@ const DQE: React.FC<any> = () => {
 
   };
 
+
      useEffect(() => {
     const paramsArray = Array.from(searchParams.entries());
     // Build the query string
@@ -154,7 +155,7 @@ const DQE: React.FC<any> = () => {
 
   return (
       <>
-          <AddDQE/>
+          <AddDQE refresh={()=>{getData('')}}/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">

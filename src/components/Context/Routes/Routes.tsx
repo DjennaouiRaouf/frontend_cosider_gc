@@ -9,6 +9,8 @@ import NavigationBar from "../../NavigationBar/NavigationBar";
 import Client from "../../Client/Client";
 import DQE from "../../DQE/DQE";
 import DQEParams from "../../DQE/DQEParams";
+import BonLivraison from "../../BonLivraison/BonLivraison";
+import BLParams from "../../BonLivraison/BLParams";
 
 const Routes: React.FC<any> = () => {
 
@@ -60,10 +62,43 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
+             <Route
+              path="/bl"
+              element={
+                  authenticated ? (
+                      <>
+                          <BLParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+                    <Route
+              path="/bl/liste_bl/:cid"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <BonLivraison/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
 
 
                          <Route
-              path="/dqe/liste/:cid"
+              path="/dqe/liste_dqe/:cid"
               element={
                   authenticated ? (
                       <>

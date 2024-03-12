@@ -14,7 +14,7 @@ import {useDispatch} from "react-redux";
 import contrat from "../Contrat/Contrat";
 
 
-const DQEParams: React.FC<any> = () => {
+const BLParams: React.FC<any> = () => {
     const [display, setDisplay] = useState(true);
      const [selectedOption, setSelectedOption] = useState<string[]>([]);
     const [options,setOptions]=useState<string[]>([]);
@@ -24,7 +24,7 @@ const DQEParams: React.FC<any> = () => {
   const valider = () => {
     hide();
     const val:string=selectedOption[0]
-     navigate(`liste_dqe/${encodeURIComponent(val)}`, )
+     navigate(`liste_bl/${encodeURIComponent(val)}`, )
 
   }
 
@@ -102,4 +102,4 @@ const DQEParams: React.FC<any> = () => {
 };
 
 
-export default DQEParams;
+export default BLParams;
