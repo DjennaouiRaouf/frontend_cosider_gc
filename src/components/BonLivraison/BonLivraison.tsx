@@ -11,6 +11,7 @@ import numeral from "numeral";
 import Cookies from "js-cookie";
 import {useDispatch} from "react-redux";
 import {showAddBL} from "../Slices/AddModalSlices";
+import AddBL from "../AddBL/AddBL";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -154,7 +155,7 @@ const BonLivraison: React.FC<any> = () => {
 
   return (
       <>
-
+            <AddBL refresh={()=>{getData('')}}/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
