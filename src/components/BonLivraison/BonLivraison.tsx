@@ -151,7 +151,6 @@ const BonLivraison: React.FC<any> = () => {
 
     }
 
-
   return (
       <>
 

@@ -20,7 +20,7 @@ interface AddDQEProps {
     refresh:()=>void,
 
 }
-const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
+const AddBL: React.FC<AddDQEProps> = ({refresh}) => {
      const [validated, setValidated] = useState(false);
     const { showAddBLForm } = useSelector((state: RootState) => state.addDataModalReducer);
 
@@ -55,7 +55,7 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
 
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/dqeaddform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/bladdform/`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -81,6 +81,7 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
         e.preventDefault();
         const form = e.currentTarget;
         formData['contrat']=cid
+     /*
         const formDataObject:any=Object.assign({}, formData)
         if (form.checkValidity()) {
             setValidated(false)
@@ -109,6 +110,8 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
             setValidated(true)
         }
 
+
+      */
 
     }
     useEffect(() => {
@@ -275,4 +278,4 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
   );
 };
 
-export default AddDQE;
+export default AddBL;
