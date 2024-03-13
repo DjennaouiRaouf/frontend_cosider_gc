@@ -17,7 +17,7 @@ const AddItem: React.FC<AddItemProps> = (props) => {
     return (<>
         <AddItemBL/>
       <button
-          className="btn btn-primary"
+          className="btn btn-primary btn-sm"
           type="button"
           style={{background: "#df162c", borderColor: "#df162c", margin: 0}}
           onClick={addItems}
