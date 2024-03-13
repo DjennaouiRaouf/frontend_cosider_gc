@@ -6,7 +6,6 @@ import AddItemBL from "../../AddItemBL/AddItemBL";
 type AddItemProps = {
  data:any;
 };
-
 const AddItem: React.FC<AddItemProps> = (props) => {
     const dispatch=useDispatch();
 
