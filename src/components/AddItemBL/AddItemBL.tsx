@@ -142,8 +142,6 @@ const AddItemBL: React.FC<AddItemBLProps> = () => {
                 [ref]: [],
             })
         }
-
-
     };
 
   return (
