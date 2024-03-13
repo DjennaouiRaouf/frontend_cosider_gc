@@ -15,12 +15,13 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {ColDef} from "ag-grid-community";
 import {useParams} from "react-router-dom";
+import {displayAlertMessage} from "../Slices/AlertMessageSlices";
 
-interface AddDQEProps {
+interface AddBLProps {
     refresh:()=>void,
 
 }
-const AddBL: React.FC<AddDQEProps> = ({refresh}) => {
+const AddBL: React.FC<AddBLProps> = ({refresh}) => {
      const [validated, setValidated] = useState(false);
     const { showAddBLForm } = useSelector((state: RootState) => state.addDataModalReducer);
 
@@ -81,10 +82,12 @@ const AddBL: React.FC<AddDQEProps> = ({refresh}) => {
         e.preventDefault();
         const form = e.currentTarget;
         formData['contrat']=cid
-     /*
+
         const formDataObject:any=Object.assign({}, formData)
+
         if (form.checkValidity()) {
             setValidated(false)
+
             await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addbl/`,Transform(formDataObject),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
@@ -97,11 +100,14 @@ const AddBL: React.FC<AddDQEProps> = ({refresh}) => {
                     refresh();
                     setFormData(defaultState);
                     handleClose();
+                    dispatch(displayAlertMessage({variant:'success',message:'Bon de livraison ajouté'}))
 
                 })
                 .catch((error:any) => {
+                    dispatch(displayAlertMessage({variant:'danger',message:'Bon de livraison ajouté'}))
 
                 });
+
 
 
         }
@@ -111,7 +117,6 @@ const AddBL: React.FC<AddDQEProps> = ({refresh}) => {
         }
 
 
-      */
 
     }
     useEffect(() => {

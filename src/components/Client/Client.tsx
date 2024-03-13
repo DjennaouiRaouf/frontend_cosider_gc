@@ -166,7 +166,7 @@ const Client: React.FC<any> = () => {
   return (
       <>
           <>
-              <AddClient/>
+              <AddClient refresh={()=>{getData('')}}/>
               <SearchClient/>
           </>
           <div id="wrapper">

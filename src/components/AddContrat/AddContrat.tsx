@@ -10,10 +10,10 @@ import axios from "axios";
 import {Transform} from "../Utils/Utils";
 
 type AddContratProps = {
-  //
+  refresh:()=>void,
 };
 
-const AddContrat: React.FC<any> = () => {
+const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
      const [validated, setValidated] = useState(false);
     const { showAddContratForm } = useSelector((state: RootState) => state.addDataModalReducer);
 
@@ -89,6 +89,8 @@ const AddContrat: React.FC<any> = () => {
                 .then((response:any) => {
 
                     setFormData(defaultState);
+                    handleClose();
+                    refresh();
 
                 })
                 .catch((error:any) => {

@@ -9,9 +9,13 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import {Transform} from "../Utils/Utils";
 
+interface AddClientProps {
+        refresh:()=>void,
+
+}
 
 
-const AddClient: React.FC<any> = () => {
+const AddClient: React.FC<AddClientProps> = ({refresh}) => {
      const [validated, setValidated] = useState(false);
     const { showAddClientForm } = useSelector((state: RootState) => state.addDataModalReducer);
 
@@ -87,7 +91,8 @@ const AddClient: React.FC<any> = () => {
                 .then((response:any) => {
 
                     setFormData(defaultState);
-
+                    handleClose();
+                    refresh();
                 })
                 .catch((error:any) => {
                 });

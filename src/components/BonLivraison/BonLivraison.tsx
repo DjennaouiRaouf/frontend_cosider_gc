@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import {useDispatch} from "react-redux";
 import {showAddBL} from "../Slices/AddModalSlices";
 import AddBL from "../AddBL/AddBL";
+import AlertMessage from "../AlertMessage/AlertMessage";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -155,6 +156,7 @@ const BonLivraison: React.FC<any> = () => {
 
   return (
       <>
+          <AlertMessage/>
             <AddBL refresh={()=>{getData('')}}/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">

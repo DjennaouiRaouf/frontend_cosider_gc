@@ -164,7 +164,7 @@ const Contrat: React.FC<any> = () => {
   return (
       <>
           <>
-            <AddContrat/>
+            <AddContrat refresh={()=>{getData('')}}/>
             <SearchContrat/>
           </>
           <div id="wrapper">
