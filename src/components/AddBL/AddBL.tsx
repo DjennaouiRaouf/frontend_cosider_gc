@@ -1,21 +1,18 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {Button, Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
-import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../Store/Store";
 import {hideAddBL} from "../Slices/AddModalSlices";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {Transform} from "../Utils/Utils";
-import {AgGridReact} from "ag-grid-react";
-import numeral from "numeral";
 import 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import {ColDef} from "ag-grid-community";
 import {useParams} from "react-router-dom";
-import {displayAlertMessage} from "../Slices/AlertMessageSlices";
+import {displayAlertMessage, Variant} from "../Slices/AlertMessageSlices";
 
 interface AddBLProps {
     refresh:()=>void,
@@ -100,11 +97,11 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
                     refresh();
                     setFormData(defaultState);
                     handleClose();
-                    dispatch(displayAlertMessage({variant:'success',message:'Bon de livraison ajouté'}))
+                    dispatch(displayAlertMessage({variant:Variant.SUCCESS,message:'Bon de livraison ajouté'}))
 
                 })
                 .catch((error:any) => {
-                    dispatch(displayAlertMessage({variant:'danger',message:'Bon de livraison ajouté'}))
+                    dispatch(displayAlertMessage({variant:Variant.DANGER,message:JSON.stringify(error.response.data,null,2)}))
 
                 });
 

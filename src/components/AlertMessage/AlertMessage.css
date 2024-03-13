@@ -1,6 +1,0 @@
-.top-right-alert {
-  position: fixed;
-  top: 20px; /* Adjust as needed */
-  right: 20px; /* Adjust as needed */
-  z-index: 9999; /* Ensure the alert appears on top of other content */
-}
