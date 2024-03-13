@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import thunk from 'redux-thunk';
+
 import AddDataModalReducer from "../Slices/AddModalSlices";
 import SearchDataModalReducer from "../Slices/SearchModalSlices";
 import AlertMessageReducer from "../Slices/AlertMessageSlices";

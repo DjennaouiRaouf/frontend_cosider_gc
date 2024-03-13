@@ -13,6 +13,7 @@ import {useDispatch} from "react-redux";
 import {showAddBL} from "../Slices/AddModalSlices";
 import AddBL from "../AddBL/AddBL";
 import AlertMessage from "../AlertMessage/AlertMessage";
+import AddItem from "../ActionRenderer/AddItem/AddItem";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -107,7 +108,14 @@ const BonLivraison: React.FC<any> = () => {
         })
             .then((response:any) => {
 
-                 setFields(response.data.fields)
+                    const updatedCols:any[] = [...response.data.fields, {
+                    headerName:'Ajouter',
+                    cellRenderer:AddItem,
+                         minWidth: 250
+
+                }];
+
+                 setFields(updatedCols)
 
 
 

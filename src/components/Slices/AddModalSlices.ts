@@ -8,6 +8,7 @@ export interface AddDataModalState {
     showAddClientForm:boolean;
     showAddDQEForm:boolean;
     showAddBLForm:boolean;
+    showAddBLItemForm:any;
 
 }
 
@@ -16,6 +17,11 @@ const initialState: AddDataModalState = {
     showAddClientForm:false,
     showAddDQEForm:false,
     showAddBLForm:false,
+    showAddBLItemForm:{
+        id:'',
+        shown:false,
+    },
+
 
 };
 
@@ -59,6 +65,17 @@ export const AddDataModal = createSlice({
             state.showAddBLForm=false
         },
 
+        showAddBLItem: (state,action: PayloadAction<{id:string}>) => {
+            state.showAddBLItemForm.id=action.payload.id
+            state.showAddBLItemForm.shown=true
+
+        },
+        hideAddBLItem: (state) => {
+            state.showAddBLItemForm.shown=false
+            state.showAddBLItemForm.id=''
+
+        },
+
 
 
 
@@ -68,6 +85,7 @@ export const AddDataModal = createSlice({
 export const { showAddContrat,hideAddContrat,
 showAddClient,hideAddClient,
 showAddDQE,hideAddDQE,
-showAddBL,hideAddBL} = AddDataModal.actions;
+showAddBL,hideAddBL,
+showAddBLItem,hideAddBLItem} = AddDataModal.actions;
 
 export default AddDataModal.reducer;
