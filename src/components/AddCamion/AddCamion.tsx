@@ -4,7 +4,7 @@ import {Typeahead} from "react-bootstrap-typeahead";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../Store/Store";
-import {hideAddClient} from "../Slices/AddModalSlices";
+import {hideAddCamion} from "../Slices/AddModalSlices";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {Transform} from "../Utils/Utils";
@@ -17,7 +17,7 @@ interface AddCamionProps {
 
 const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
      const [validated, setValidated] = useState(false);
-    const { showAddClientForm } = useSelector((state: RootState) => state.addDataModalReducer);
+    const { showAddCamionForm } = useSelector((state: RootState) => state.addDataModalReducer);
 
     const dispatch = useDispatch();
     const [fields,setFields]=useState<any[]>([]);
@@ -118,7 +118,7 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
 
     },[]);
     const handleClose = () => {
-        dispatch(hideAddClient())
+        dispatch(hideAddCamion())
 
     }
     const handleChange = (ref:any, op:any) => {
@@ -140,7 +140,7 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
 
   return (
       <>
-         <Modal show={showAddClientForm} onHide={handleClose} size={"xl"}>
+         <Modal show={showAddCamionForm} onHide={handleClose} size={"xl"}>
               <Form
                       noValidate validated={validated} onSubmit={handleSubmit} >
         <Modal.Header closeButton>
