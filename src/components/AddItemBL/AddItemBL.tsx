@@ -11,6 +11,7 @@ import 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {useParams} from "react-router-dom";
+import "./AddItemBL.css"
 import {displayAlertMessage, Variant} from "../Slices/AlertMessageSlices";
 import {hideAddBLItem} from "../Slices/AddModalSlices";
 
@@ -22,11 +23,15 @@ interface AddItemBLProps {
 const AddItemBL: React.FC<AddItemBLProps> = () => {
      const [validated, setValidated] = useState(false);
     const { showAddBLItemForm } = useSelector((state: RootState) => state.addDataModalReducer);
-
+    const { cid } = useParams();
     const dispatch = useDispatch();
     const [fields,setFields]=useState<any[]>([]);
     const [defaultState,setDefaultState]=useState<any>({});
     const [formData, setFormData] = useState<any>({});
+
+
+
+
     const opt:any[] = [
             {
                 value: false,
@@ -52,9 +57,9 @@ const AddItemBL: React.FC<AddItemBLProps> = () => {
 
 
 
-
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/bladdform/`,{
+        const contrat_id:string=encodeURIComponent(String(cid));
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/additemblform/?contrat=${contrat_id}`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -75,17 +80,16 @@ const AddItemBL: React.FC<AddItemBLProps> = () => {
 
     }
 
-    const { cid } = useParams();
  const handleSubmit = async(e: any) => {
         e.preventDefault();
         const form = e.currentTarget;
         formData['contrat']=cid
-
+        console.log(formData)
         const formDataObject:any=Object.assign({}, formData)
 
         if (form.checkValidity()) {
             setValidated(false)
-
+/*
             await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/AddItemBL/`,Transform(formDataObject),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
@@ -106,6 +110,8 @@ const AddItemBL: React.FC<AddItemBLProps> = () => {
 
                 });
 
+
+ */
 
 
         }
@@ -231,10 +237,12 @@ const AddItemBL: React.FC<AddItemBLProps> = () => {
                                                                       <Form.Control
                                                                           name={field.name}
                                                                           required={field.required}
-                                                                          className="w-100"
+                                                                          className="numeric-input w-100"
                                                                           type="number"
                                                                           value={formData[field.name] || 0}
                                                                           step={0.01}
+                                                                          readOnly={field.readOnly}
+
                                                                           onChange={(e) => handleInputChange(e)}
                                                                       />
 

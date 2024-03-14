@@ -6,12 +6,14 @@ interface Obj {
 export interface SearchDataModalState {
     showSearchContratForm:boolean;
     showSearchClientForm:boolean;
+    showSearchDQEForm:boolean;
 
 }
 
 const initialState: SearchDataModalState = {
     showSearchContratForm:false,
     showSearchClientForm:false,
+    showSearchDQEForm:false,
 
 };
 
@@ -35,13 +37,22 @@ export const SearchDataModal = createSlice({
         hideSearchClient: (state) => {
             state.showSearchClientForm=false
         },
-    
+        showSearchDQE: (state) => {
+
+            state.showSearchDQEForm=true
+
+        },
+        hideSearchDQE: (state) => {
+            state.showSearchDQEForm=false
+        },
+
 
 
     }
 });
 
 export const { showSearchContrat,hideSearchContrat,
-showSearchClient,hideSearchClient} = SearchDataModal.actions;
+showSearchClient,hideSearchClient,
+showSearchDQE,hideSearchDQE} = SearchDataModal.actions;
 
 export default SearchDataModal.reducer;

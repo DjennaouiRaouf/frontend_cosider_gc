@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import {useDispatch} from "react-redux";
 import AddDQE from "../AddDQE/AddDQE";
 import {showAddDQE} from "../Slices/AddModalSlices";
+import SearchDQE from "../SearchDQE/SearchDQE";
+import {showSearchDQE} from "../Slices/SearchModalSlices";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -149,6 +151,7 @@ const DQE: React.FC<any> = () => {
 
     }
       const searchD = () => {
+        dispatch(showSearchDQE())
 
     }
 
@@ -156,6 +159,7 @@ const DQE: React.FC<any> = () => {
   return (
       <>
           <AddDQE refresh={()=>{getData('')}}/>
+          <SearchDQE/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
