@@ -83,6 +83,9 @@ const NavigationBar: React.FC<any> = () => {
                         <Nav.Link href="/dqe">DQE</Nav.Link>
                         <Nav.Link href="/bl">Bons de livraison</Nav.Link>
                         <Nav.Link href="/factures">factures</Nav.Link>
+                        <Nav.Link href="/camions">Camions</Nav.Link>
+
+
                     </Nav>
                     <Nav className="navbar-nav ms-auto">
                         <li className="nav-item dropdown no-arrow">

@@ -11,6 +11,7 @@ import DQE from "../../DQE/DQE";
 import DQEParams from "../../DQE/DQEParams";
 import BonLivraison from "../../BonLivraison/BonLivraison";
 import BLParams from "../../BonLivraison/BLParams";
+import Camion from "../../Camion/Camion";
 
 const Routes: React.FC<any> = () => {
 
@@ -53,6 +54,22 @@ const Routes: React.FC<any> = () => {
                   authenticated ? (
                       <>
                           <DQEParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+            <Route
+              path="/camions"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <Camion/>
 
 
 
