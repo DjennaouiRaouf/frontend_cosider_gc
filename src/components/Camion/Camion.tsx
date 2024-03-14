@@ -11,9 +11,8 @@ import numeral from "numeral";
 import {Button,Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
-import {showAddClient} from "../Slices/AddModalSlices";
+import {showAddCamion} from "../Slices/AddModalSlices";
 import Cookies from "js-cookie";
-import {showSearchClient} from "../Slices/SearchModalSlices";
 import AddClient from "../AddClient/AddClient";
 import SearchClient from "../SearchClient/SearchClient";
 
@@ -133,10 +132,10 @@ const Camion: React.FC<any> = () => {
 
     const dispatch=useDispatch();
     const addC = () => {
-      dispatch(showAddClient())
+      dispatch(showAddCamion())
     }
       const searchC = () => {
-      dispatch(showSearchClient())
+
     }
 
 
