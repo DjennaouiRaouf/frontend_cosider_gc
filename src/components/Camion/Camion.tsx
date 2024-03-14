@@ -227,7 +227,6 @@ const Camion: React.FC<any> = () => {
                                                       </a>
                                                   </div>
                                               </div>
-
                                           </div>
                                       </div>
                                   </div>
@@ -237,14 +236,11 @@ const Camion: React.FC<any> = () => {
                                       role="grid"
                                       aria-describedby="dataTable_info"
                                       style={{ height: 500 }}
-
                                   >
                                     <AgGridReact ref={gridRef}
                                            rowData={data} columnDefs={fields}
                                            gridOptions={gridOptions}
                                            onRowClicked={handleRowClick}
-
-
                                     />
 
                                   </div>
