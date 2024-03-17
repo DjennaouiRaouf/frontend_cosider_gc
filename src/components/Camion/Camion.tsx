@@ -12,9 +12,9 @@ import {Button,Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
 import {showAddCamion} from "../Slices/AddModalSlices";
+import {showSearchCamion} from "../Slices/SearchModalSlices";
 import Cookies from "js-cookie";
 import AddCamion from "../AddCamion/AddCamion";
-import SearchClient from "../SearchClient/SearchClient";
 import SearchCamion from "../SearchCamion/SearchCamion";
 
 
@@ -134,6 +134,7 @@ const Camion: React.FC<any> = () => {
       dispatch(showAddCamion())
     }
       const searchC = () => {
+        dispatch(showSearchCamion())
 
     }
 

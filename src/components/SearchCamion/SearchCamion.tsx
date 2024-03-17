@@ -4,7 +4,7 @@ import {Typeahead} from "react-bootstrap-typeahead";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../Store/Store";
-import {hideSearchClient} from "../Slices/SearchModalSlices";
+import {hideSearchCamion} from "../Slices/SearchModalSlices";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {useNavigate, useSearchParams} from "react-router-dom";
@@ -13,7 +13,7 @@ import {Transform} from "../Utils/Utils";
 
 const SearchCamion: React.FC<any> = () => {
      const [validated, setValidated] = useState(false);
-    const { showSearchClientForm } = useSelector((state: RootState) => state.searchDataModalReducer);
+    const { showSearchCamionForm } = useSelector((state: RootState) => state.searchDataModalReducer);
     const navigate=useNavigate();
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const SearchCamion: React.FC<any> = () => {
 
     },[]);
     const handleClose = () => {
-            dispatch(hideSearchClient());
+            dispatch(hideSearchCamion());
     }
     const handleChange = (ref:any, op:any) => {
         if(op.length ===1 ){
@@ -120,7 +120,7 @@ const SearchCamion: React.FC<any> = () => {
 
         navigate(newLocation);
         navigate(`?${url_tmp.join('')}`);
-        dispatch(hideSearchClient());
+        dispatch(hideSearchCamion());
         setFormData({})
 
 
@@ -128,7 +128,7 @@ const SearchCamion: React.FC<any> = () => {
 
   return (
       <>
-         <Modal show={showSearchClientForm} onHide={handleClose} size={"xl"}>
+         <Modal show={showSearchCamionForm} onHide={handleClose} size={"xl"}>
                <Form
                       noValidate validated={validated} onSubmit={handleSubmit} >
         <Modal.Header closeButton>
