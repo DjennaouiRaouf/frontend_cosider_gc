@@ -4,26 +4,26 @@ import {Typeahead} from "react-bootstrap-typeahead";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../Store/Store";
-import {hideAddCamion} from "../Slices/AddModalSlices";
+import {hideSearchClient} from "../Slices/SearchModalSlices";
 import Cookies from "js-cookie";
 import axios from "axios";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {Transform} from "../Utils/Utils";
 
-interface AddCamionProps {
-        refresh:()=>void,
 
-}
-
-
-const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
+const SearchCamion: React.FC<any> = () => {
      const [validated, setValidated] = useState(false);
-    const { showAddCamionForm } = useSelector((state: RootState) => state.addDataModalReducer);
-
+    const { showSearchClientForm } = useSelector((state: RootState) => state.searchDataModalReducer);
+    const navigate=useNavigate();
+    const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
     const [fields,setFields]=useState<any[]>([]);
-    const [defaultState,setDefaultState]=useState<any>({});
     const [formData, setFormData] = useState<any>({});
  const opt:any[] = [
+        {
+          value:'',
+          label:'Tout',
+        },
         {
             value: false,
             label: 'Non',
@@ -47,10 +47,10 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
     };
 
 
-
+    // submit
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/camionaddform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/camionfilterform/`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -60,8 +60,6 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
         })
             .then((response:any) => {
                 setFields(response.data.fields);
-                setDefaultState(response.data.state)
-                setFormData(response.data.state)
 
 
             })
@@ -71,45 +69,7 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
 
     }
 
- const handleSubmit = async(e: any) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        console.log(formData)
 
-
-        if (form.checkValidity()) {
-            setValidated(false)
-
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addcamion/`,Transform(formData),{
-                headers: {
-                    Authorization: `Token ${Cookies.get("token")}`,
-                    'Content-Type': 'application/json',
-
-                },
-
-            })
-                .then((response:any) => {
-
-                    setFormData(defaultState);
-                    handleClose();
-                    refresh();
-                })
-                .catch((error:any) => {
-                });
-
-
-
-
-
-
-        }
-        else {
-
-            setValidated(true)
-        }
-
-
-    }
     useEffect(() => {
 
         getFields();
@@ -118,8 +78,7 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
 
     },[]);
     const handleClose = () => {
-        dispatch(hideAddCamion())
-
+            dispatch(hideSearchClient());
     }
     const handleChange = (ref:any, op:any) => {
         if(op.length ===1 ){
@@ -136,21 +95,49 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
 
 
     };
+ const handleSubmit = async(e: any) => {
+    e.preventDefault();
+    const url_tmp:string[]=[];
+    const formDataObject=Transform(formData)
+    Object.entries(formDataObject).forEach(([key, value], index) => {
+      const val:string=String(value);
 
+      if(index === 0){
+
+        url_tmp.push(`${key}=${encodeURIComponent(val)}`);
+      }
+      if(index >= 1){
+        url_tmp.push(`&${key}=${encodeURIComponent(val)}`);
+      }
+
+    });
+
+    const queryParamsString = new URLSearchParams(searchParams).toString(); // Convert query parameters to string
+    const newLocation = {
+      pathname: '', // New route path
+      search: queryParamsString, // Append existing query parameters
+    };
+
+        navigate(newLocation);
+        navigate(`?${url_tmp.join('')}`);
+        dispatch(hideSearchClient());
+        setFormData({})
+
+
+  }
 
   return (
       <>
-         <Modal show={showAddCamionForm} onHide={handleClose} size={"xl"}>
-              <Form
+         <Modal show={showSearchClientForm} onHide={handleClose} size={"xl"}>
+               <Form
                       noValidate validated={validated} onSubmit={handleSubmit} >
         <Modal.Header closeButton>
-          <Modal.Title>Ajouter un camion</Modal.Title>
+          <Modal.Title>Rechercher un camion</Modal.Title>
         </Modal.Header>
           <Modal.Body>
               <div className="container-fluid">
-                  <div className="card shadow mb-3 bg-body-tertiary ">
-                      <div className="card-body bg-body-tertiary ">
-
+                  <div className="card shadow mb-3">
+                      <div className="card-body">
 
                               <div className="row" style={{marginBottom: 25, textAlign: "left"}}>
                                   {fields.map((field:any,index:any) => (
@@ -159,34 +146,16 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
                                           <label className="form-label" htmlFor="username">
                                               <strong>
                                                   {field.label + " "}
-                                                  {field.required ?
-                                                      <span style={{
-                                                          color: "rgb(255,0,0)",
-                                                          fontSize: 18,
-                                                          fontWeight: "bold"
-                                                      }}>
-                                                                  *
-                                                            </span> :
-                                                      <span style={{
-                                                          color: "rgb(255,0,0)",
-                                                          fontSize: 18,
-                                                          fontWeight: "bold"
-                                                      }}>
-
-                                                                </span>
-                                                  }
                                               </strong>
                                           </label>
  {
-                                                            field.type === "PrimaryKeyRelatedField"?
+                                                            field.type === "ModelChoiceFilter"?
                                                                 <>
                                                                     <Typeahead
 
                                                                          labelKey={"label"}
                                                                     onChange={(o) => handleChange(field.name, o)}
                                                                     id={field.name}
-                                                                         inputProps={{ required: field.required }}
-
                                                                     selected={formData[field.name] || []}
                                                                     options={field.queryset}
 
@@ -195,14 +164,14 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
 
 
                                                                 :
-                                                                field.type === 'BooleanField' ?
+                                                                field.type === 'BooleanFilter' ?
 
                                                                     <Form.Control
                                                                         as="select"
                                                                         name={field.name}
-                                                                        required={field.required}
+                                                                        
                                                                         className="w-100"
-                                                                        value={formData[field.name]}
+
                                                                         onChange={(e)=>handleSelectChange(e)}>
 
                                                                         {opt.map((item,index) => (
@@ -212,24 +181,23 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
                                                                     </Form.Control>
 
 
-                                                                    : field.type === 'DateField' ?
+                                                                    : field.type === 'DateFilter' ?
                                                                         <Form.Control
                                                                             name={field.name}
-                                                                            required={field.required}
+                                                                            
                                                                             className="w-100"
                                                                             type="date"
-                                                                            value={formData[field.name]||''}
+                                                                            value={formData[field.name]}
                                                                             onChange={(e)=>handleInputChange(e)}
                                                                         />
-                                                                        : field.type === 'IntegerField' || field.type ==='DecimalField'  ?
+                                                                        : field.type === 'NumberFilter'  ?
                                                                             <Form.Control
                                                                                 name={field.name}
-                                                                                required={field.required}
+                                                                                
                                                                                 className="w-100"
                                                                                 type="number"
                                                                                 value={formData[field.name] || 0}
-                                                                                step={0.01}
-                                                                                readOnly={field.readOnly}
+                                                                                
 
                                                                                 onChange={(e)=>handleInputChange(e)}
                                                                             />
@@ -237,10 +205,10 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
                                                                             :
                                                                             <Form.Control
                                                                                 name={field.name}
-                                                                                required={field.required}
+                                                                                
                                                                                 className="w-100"
                                                                                 type="text"
-                                                                                value={formData[field.name]||''}
+                                                                                value={formData[field.name]}
                                                                                 onChange={(e)=>handleInputChange(e)}
                                                                             />
 
@@ -263,13 +231,15 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
                                       <Modal.Footer>
 
                                       <Button variant="primary" style={{background: "#df162c", borderWidth: 0}} type={"submit"}>
-                  Ajouter
+                  Rechercher
               </Button>
           </Modal.Footer>
-                  </Form>
+               </Form>
       </Modal>
   </>
   );
 };
 
-export default AddCamion;
+export default SearchCamion;
+
+

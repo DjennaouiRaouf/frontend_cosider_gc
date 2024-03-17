@@ -13,9 +13,9 @@ import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
 import {showAddCamion} from "../Slices/AddModalSlices";
 import Cookies from "js-cookie";
-import AddClient from "../AddClient/AddClient";
+import AddCamion from "../AddCamion/AddCamion";
 import SearchClient from "../SearchClient/SearchClient";
-
+import SearchCamion from "../SearchCamion/SearchCamion";
 
 
 
@@ -40,23 +40,22 @@ const Camion: React.FC<any> = () => {
     defaultColDef:defaultColDefs,
     multiSortKey:'ctrl',
     animateRows:true,
-
+    paginationPageSize:100,
 
     localeText: {
       // Default pagination text
       page: 'Page',
       to: 'à',
       of: 'sur',
+         pageSizeSelectorLabel: 'Par page',
+
       nextPage: 'Suivant',
       lastPage: 'Dernier',
       firstPage: 'Premier',
       previousPage: 'Precedent',
-
-
       loadingOoo: 'Chargement...',
       noRowsToShow: 'Pas de Données',
 
-      // Add more custom texts as needed
     },
   };
 
@@ -142,7 +141,8 @@ const Camion: React.FC<any> = () => {
   return (
       <>
           <>
-
+                <AddCamion refresh={()=>getData('')}/>
+                <SearchCamion/>
           </>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
