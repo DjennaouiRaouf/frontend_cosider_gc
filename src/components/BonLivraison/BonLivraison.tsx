@@ -14,19 +14,20 @@ import {showAddBL} from "../Slices/AddModalSlices";
 import AddBL from "../AddBL/AddBL";
 import AlertMessage from "../AlertMessage/AlertMessage";
 import AddItem from "../ActionRenderer/AddItem/AddItem";
-
+import DetailBLItem from "../ActionRenderer/DetailBLItem/DetailBLItem";
+import {formatDate} from "../Utils/Utils";
+import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
 
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
 
   switch (props.column.colId) {
 
-    case 'montant_qte' :
-      return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
-    case 'prix_unitaire' :
-      return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
-    default:
-      return <span>{value}</span>
+    case 'date' :
+      return <span>{formatDate(value)}</span>
+
+      default:
+        return <span>{value}</span>
   }
 
 };
@@ -113,7 +114,20 @@ const BonLivraison: React.FC<any> = () => {
                     cellRenderer:AddItem,
                          minWidth: 250
 
-                }];
+                }, {
+                    headerName:'Produits livrés',
+                    cellRenderer:DetailBLItem,
+                         minWidth: 250
+
+                },
+                     {
+                    headerName:'Imprimer ',
+                    cellRenderer:PrintBL,
+                         minWidth: 250
+
+                    }
+
+                    ];
 
                  setFields(updatedCols)
 
@@ -227,28 +241,6 @@ const BonLivraison: React.FC<any> = () => {
                                               <button className="btn btn-primary" type="button"style={{background: "#df162c", borderWidth: 0}} onClick={searchBL}>
                                                   Rechercher
                                               </button>
-                                              <div className="dropdown btn-group" role="group" >
-                                                  <button
-                                                      className="btn btn-primary dropdown-toggle" style={{background: "#df162c", borderWidth: 0}}
-                                                      aria-expanded="false"
-                                                      data-bs-toggle="dropdown"
-                                                      type="button"
-                                                  >
-                                                      Imprimer{" "}
-                                                  </button>
-                                                  <div className="dropdown-menu">
-                                                      <a className="dropdown-item" href="#">
-                                                          First Item
-                                                      </a>
-                                                      <a className="dropdown-item" href="#">
-                                                          Second Item
-                                                      </a>
-                                                      <a className="dropdown-item" href="#">
-                                                          Third Item
-                                                      </a>
-                                                  </div>
-                                              </div>
-
                                           </div>
                                       </div>
                                   </div>
