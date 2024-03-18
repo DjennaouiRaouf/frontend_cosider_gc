@@ -24,22 +24,20 @@ const Camion: React.FC<any> = () => {
   const[data,setData]=useState<any[]>([]);
   const [searchParams] = useSearchParams();
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
-    const gridRef = useRef(null);
+  const gridRef = useRef(null);
 
-    const defaultColDefs: ColDef = {
+  const defaultColDefs: ColDef = {
     sortable: true,
     resizable: true,
     minWidth: 200,
     autoHeight: true, wrapText: true,
     cellStyle: {textAlign: 'start', border: "none"},
-
   };
 
-        const gridOptions:any = {
+  const gridOptions:any = {
     pagination: true,
     defaultColDef:defaultColDefs,
     multiSortKey:'ctrl',
-    animateRows:true,
     paginationPageSize:100,
 
     localeText: {
@@ -231,11 +229,8 @@ const Camion: React.FC<any> = () => {
                                       </div>
                                   </div>
                                   <div
-                                      id="dataTable"
-                                      className="table-responsive table mt-2 ag-theme-alpine"
-                                      role="grid"
-                                      aria-describedby="dataTable_info"
-                                      style={{ height: 500 }}
+                                      className="ag-theme-alpine"
+                                      style={{ height: 500,width:"100%" }}
                                   >
                                     <AgGridReact ref={gridRef}
                                            rowData={data} columnDefs={fields}

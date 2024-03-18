@@ -256,11 +256,8 @@ const Client: React.FC<any> = () => {
                                       </div>
                                   </div>
                                   <div
-                                      id="dataTable"
-                                      className="table-responsive table mt-2 ag-theme-alpine"
-                                      role="grid"
-                                      aria-describedby="dataTable_info"
-                                      style={{ height: 500 }}
+                                 className="ag-theme-alpine"
+                                      style={{ height: 500,width:"100%" }}
 
                                   >
                                     <AgGridReact ref={gridRef}
