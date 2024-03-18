@@ -253,7 +253,7 @@ const BonLivraison: React.FC<any> = () => {
                                       </div>
                                   </div>
                                   <div
-                                      className="ag-theme-alpine"
+                                      className="ag-theme-alpine mt-4"
                                       style={{ height: 500,width:"100%" }}
 
                                   >
