@@ -26,6 +26,7 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
     const [fields,setFields]=useState<any[]>([]);
     const [defaultState,setDefaultState]=useState<any>({});
     const [formData, setFormData] = useState<any>({});
+    const { cid } = useParams();
     const opt:any[] = [
             {
                 value: false,
@@ -53,7 +54,8 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
 
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/bladdform/`,{
+         const contrat_id:string=encodeURIComponent(String(cid));
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/bladdform/?contrat=${contrat_id}`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -74,7 +76,6 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
 
     }
 
-    const { cid } = useParams();
  const handleSubmit = async(e: any) => {
         e.preventDefault();
         const form = e.currentTarget;
@@ -236,6 +237,7 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
                                                                           type="number"
                                                                           value={formData[field.name] || 0}
                                                                           step={0.01}
+                                                                          readOnly={field.readOnly}
                                                                           onChange={(e) => handleInputChange(e)}
                                                                       />
 
