@@ -78,7 +78,7 @@ const SearchDQE: React.FC<any> = () => {
 
     },[]);
     const handleClose = () => {
-            dispatch(hideSearchClient());
+            dispatch(hideSearchDQE());
     }
     const handleChange = (ref:any, op:any) => {
         if(op.length ===1 ){
