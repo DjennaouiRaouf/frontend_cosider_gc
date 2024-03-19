@@ -228,7 +228,6 @@ const AddClient: React.FC<AddClientProps> = ({refresh}) => {
                                                                                 className="w-100"
                                                                                 type="number"
                                                                                 value={formData[field.name] || 0}
-                                                                                step={0.01}
 
                                                                                 onChange={(e)=>handleInputChange(e)}
                                                                             />

@@ -17,7 +17,6 @@ const NavigationBar: React.FC<any> = () => {
     const { authenticated,setAuthenticated } = useContext(AuthContext);
     const navigate=useNavigate();
     const logout = async () => {
-        try{
                 await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/logout/`,{
                 withCredentials:true,
                 headers:{
@@ -30,11 +29,10 @@ const NavigationBar: React.FC<any> = () => {
                     .catch((error: any) => {
                     });
 
-        }catch(error:any){
-            setAuthenticated(null);
-            Cookies.remove('role');
-            Cookies.remove('token');
-        }
+                setAuthenticated(null);
+                Cookies.remove('role');
+                Cookies.remove('token');
+
 
     };
 

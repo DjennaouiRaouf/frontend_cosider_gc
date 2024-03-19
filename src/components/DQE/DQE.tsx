@@ -14,6 +14,7 @@ import AddDQE from "../AddDQE/AddDQE";
 import {showAddDQE} from "../Slices/AddModalSlices";
 import SearchDQE from "../SearchDQE/SearchDQE";
 import {showSearchDQE} from "../Slices/SearchModalSlices";
+import {Humanize} from "../Utils/Utils";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -37,6 +38,8 @@ const DQE: React.FC<any> = () => {
   const[contrat,setContrat]=useState<string>('');
   const [searchParams] = useSearchParams();
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
+   const[resume,setResume]=useState<any>({});
+
   const gridRef = useRef(null);
   const { cid } = useParams();
 
@@ -88,7 +91,8 @@ const DQE: React.FC<any> = () => {
       },
     })
         .then((response:any) => {
-          setData(response.data);
+          setData(response.data.dqe);
+          setResume(response.data.extra)
         })
         .catch((error:any) => {
 
@@ -177,14 +181,18 @@ const DQE: React.FC<any> = () => {
                                                       <div className="col me-2">
                                                           <div
                                                               className="text-uppercase text-success fw-bold text-xs mb-1">
-                                                              <span>Earnings (annual)</span>
+                                                              <span>Montant </span>
                                                           </div>
                                                           <div className="text-dark fw-bold h5 mb-0">
-                                                              <span>$215,000</span>
+                                                              <span>{Humanize(resume.mt) +"DA"}</span>
                                                           </div>
                                                       </div>
                                                       <div className="col-auto">
-                                                          <i className="fas fa-dollar-sign fa-2x text-gray-300"/>
+                                                          <i
+                                                              className="fas fa-money-bill-wave fa-2x text-gray-300"
+                                                              style={{color: "rgb(221, 223, 235)"}}
+                                                          />
+
                                                       </div>
                                                   </div>
                                               </div>
@@ -197,14 +205,18 @@ const DQE: React.FC<any> = () => {
                                                       <div className="col me-2">
                                                           <div
                                                               className="text-uppercase text-success fw-bold text-xs mb-1">
-                                                              <span>Earnings (annual)</span>
+                                                              <span>Quantité </span>
                                                           </div>
                                                           <div className="text-dark fw-bold h5 mb-0">
-                                                              <span>$215,000</span>
+                                                              <span>{Humanize(resume.qt) +"T"}</span>
                                                           </div>
                                                       </div>
                                                       <div className="col-auto">
-                                                          <i className="fas fa-dollar-sign fa-2x text-gray-300"/>
+                                                          <i
+                                                              className="fas fa-balance-scale-right fa-2x text-gray-300"
+                                                              style={{color: "rgb(221, 223, 235)"}}
+                                                          />
+
                                                       </div>
                                                   </div>
                                               </div>
