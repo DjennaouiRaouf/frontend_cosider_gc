@@ -85,7 +85,7 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
 
         if (form.checkValidity()) {
             setValidated(false)
-
+            console.log(Transform(formDataObject))
             await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addbl/`,Transform(formDataObject),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
