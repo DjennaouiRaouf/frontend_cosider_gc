@@ -183,7 +183,7 @@ const SearchBL: React.FC<any> = () => {
                                                                     </Form.Control>
 
 
-                                                                    : field.type === 'DateFilter' ?
+                                                                    : field.type === 'DateFilter'  || field.type === 'DateTimeFilter'?
                                                                         <Form.Control
                                                                             name={field.name}
                                                                             
