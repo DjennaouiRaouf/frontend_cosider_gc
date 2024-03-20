@@ -13,15 +13,22 @@ import {useDispatch} from "react-redux";
 import {showAddBL} from "../Slices/AddModalSlices";
 import AddBL from "../AddBL/AddBL";
 import AlertMessage from "../AlertMessage/AlertMessage";
-import AddItem from "../ActionRenderer/AddItem/AddItem";
-import DetailBLItem from "../ActionRenderer/DetailBLItem/DetailBLItem";
 import {formatDate} from "../Utils/Utils";
 import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
+import SearchBL from "../SearchBL/SearchBL";
+import {showSearchBL} from "../Slices/SearchModalSlices";
 
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
 
   switch (props.column.colId) {
+
+
+    case 'montant' :
+        return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
+    case 'montant_cumule' :
+        return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
+
 
     case 'date' :
       return <span>{formatDate(value)}</span>
@@ -109,23 +116,14 @@ const BonLivraison: React.FC<any> = () => {
         })
             .then((response:any) => {
 
-                    const updatedCols:any[] = [...response.data.fields, {
-                    headerName:'Ajouter',
-                    cellRenderer:AddItem,
-                         minWidth: 250
-
-                }, {
-                    headerName:'Produits livrés',
-                    cellRenderer:DetailBLItem,
-                         minWidth: 250
-
-                },
+                    const updatedCols:any[] = [...response.data.fields,
                      {
                     headerName:'Imprimer ',
                     cellRenderer:PrintBL,
                          minWidth: 250
 
                     }
+
 
                     ];
 
@@ -172,7 +170,7 @@ const BonLivraison: React.FC<any> = () => {
 
     }
       const searchBL = () => {
-
+        dispatch(showSearchBL())
     }
 
 
@@ -180,6 +178,8 @@ const BonLivraison: React.FC<any> = () => {
       <>
           <AlertMessage/>
             <AddBL refresh={()=>{getData('')}}/>
+            <SearchBL/>
+
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">

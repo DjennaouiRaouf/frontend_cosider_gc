@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface Obj {
     [key: string]: any;
 }
+
 export interface SearchDataModalState {
     showSearchContratForm:boolean;
     showSearchClientForm:boolean;
     showSearchDQEForm:boolean;
     showSearchCamionForm:boolean;
+    showSearchBLForm:boolean;
 
 }
 
@@ -16,6 +18,7 @@ const initialState: SearchDataModalState = {
     showSearchClientForm:false,
     showSearchDQEForm:false,
     showSearchCamionForm:false,
+    showSearchBLForm:false,
 
 };
 
@@ -48,6 +51,15 @@ export const SearchDataModal = createSlice({
             state.showSearchDQEForm=false
         },
 
+        showSearchBL: (state) => {
+            state.showSearchBLForm=true
+        },
+        hideSearchBL: (state) => {
+            state.showSearchBLForm=false
+        },
+
+
+
             showSearchCamion: (state) => {
 
             state.showSearchCamionForm=true
@@ -65,6 +77,7 @@ export const SearchDataModal = createSlice({
 export const { showSearchContrat,hideSearchContrat,
 showSearchClient,hideSearchClient,
 showSearchDQE,hideSearchDQE,
+showSearchBL,hideSearchBL,
 showSearchCamion,hideSearchCamion} = SearchDataModal.actions;
 
 export default SearchDataModal.reducer;
