@@ -80,7 +80,7 @@ const NavigationBar: React.FC<any> = () => {
                         <Nav.Link href="/client">Clients</Nav.Link>
                         <Nav.Link href="/dqe">DQE</Nav.Link>
                         <Nav.Link href="/bl">Bons de livraison</Nav.Link>
-                        <Nav.Link href="/factures">factures</Nav.Link>
+                        <Nav.Link href="/invoice">factures</Nav.Link>
                         <Nav.Link href="/camions">Camions</Nav.Link>
 
 

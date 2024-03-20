@@ -12,6 +12,8 @@ import DQEParams from "../../DQE/DQEParams";
 import BonLivraison from "../../BonLivraison/BonLivraison";
 import BLParams from "../../BonLivraison/BLParams";
 import Camion from "../../Camion/Camion";
+import InvoiceParams from "../../Invoice/InvoiceParams";
+import Invoice from "../../Invoice/Invoice";
 
 const Routes: React.FC<any> = () => {
 
@@ -102,6 +104,41 @@ const Routes: React.FC<any> = () => {
                       <>
                           <NavigationBar/>
                           <BonLivraison/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+
+
+               <Route
+              path="/invoice"
+              element={
+                  authenticated ? (
+                      <>
+                          <InvoiceParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+                    <Route
+              path="/invoice/liste_f/:cid"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <Invoice/>
 
 
 
