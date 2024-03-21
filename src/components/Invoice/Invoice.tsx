@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import {useDispatch} from "react-redux";
 import AddDQE from "../AddDQE/AddDQE";
 import {Humanize} from "../Utils/Utils";
+import {showAddFacture} from "../Slices/AddModalSlices";
+import AddFacture from "../AddFacture/AddFacture";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -157,7 +159,7 @@ const Invoice: React.FC<any> = () => {
 
     const dispatch=useDispatch();
     const addD = () => {
-
+        dispatch(showAddFacture())
     }
       const searchD = () => {
 
@@ -167,6 +169,8 @@ const Invoice: React.FC<any> = () => {
 
   return (
       <>
+          <AddFacture refresh={()=>{getData('')}}/>
+
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
