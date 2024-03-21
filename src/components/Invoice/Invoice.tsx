@@ -236,7 +236,7 @@ const Invoice: React.FC<any> = () => {
                                           <div className="btn-group" role="group">
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={addD}>
-                                                  Ajouter un dqe
+                                                  Ajouter une facture
                                               </button>
                                               <button className="btn btn-primary" type="button"style={{background: "#df162c", borderWidth: 0}} onClick={searchD}>
                                                   Rechercher
