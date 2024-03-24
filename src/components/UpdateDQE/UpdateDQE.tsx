@@ -67,6 +67,7 @@ const UpdateDQE: React.FC<UpdateDQEProps> = ({refresh}) => {
         formDataObject['contrat']=cid;
         formDataObject['id']=showEditDQEForm.id;
 
+
         if (form.checkValidity()) {
             setValidated(false)
 
