@@ -1,5 +1,6 @@
 import * as React from "react";
 import {useDispatch} from "react-redux";
+import {fetchFields, fetchState, showEditDQE} from "../../Slices/EditModalSlices";
 
 
 type EditDQEProps = {
@@ -8,8 +9,15 @@ type EditDQEProps = {
 const EditDQE: React.FC<EditDQEProps> = (props) => {
     const dispatch=useDispatch();
 
-    const print = () => {
+    const EditDQE = () => {
        const rowData:any =  props.data  ;
+
+       if(rowData){
+           dispatch(fetchFields(`/forms/dqeaddform/?id=${rowData['id']}`))
+           dispatch(fetchState(`/forms/dqeaddform/?id=${rowData['id']}`))
+           dispatch(showEditDQE({id:rowData['id']}))
+       }
+
     }
 
     return (<>
@@ -17,7 +25,7 @@ const EditDQE: React.FC<EditDQEProps> = (props) => {
           className="btn btn-primary btn-sm"
           type="button"
           style={{background: "#df162c", borderColor: "#df162c", margin: 0}}
-          onClick={print}
+          onClick={EditDQE}
           
         >
           <i className="fas fa-edit" style={{fontSize: 16, marginRight: 9}}/>

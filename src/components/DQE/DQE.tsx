@@ -17,6 +17,7 @@ import {showSearchDQE} from "../Slices/SearchModalSlices";
 import {Humanize} from "../Utils/Utils";
 import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
 import EditDQE from "../ActionRenderer/EditDQE/EditDQE";
+import UpdateDQE from "../UpdateDQE/UpdateDQE";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -176,6 +177,7 @@ const DQE: React.FC<any> = () => {
       <>
           <AddDQE refresh={()=>{getData('')}}/>
           <SearchDQE/>
+          <UpdateDQE refresh={()=>{getData('')}}/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
