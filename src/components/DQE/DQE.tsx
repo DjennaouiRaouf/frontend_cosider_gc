@@ -15,6 +15,8 @@ import {showAddDQE} from "../Slices/AddModalSlices";
 import SearchDQE from "../SearchDQE/SearchDQE";
 import {showSearchDQE} from "../Slices/SearchModalSlices";
 import {Humanize} from "../Utils/Utils";
+import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
+import EditDQE from "../ActionRenderer/EditDQE/EditDQE";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -112,7 +114,17 @@ const DQE: React.FC<any> = () => {
         })
             .then((response:any) => {
 
-                 setFields(response.data.fields)
+                    const updatedCols:any[] = [...response.data.fields,
+                     {
+                    headerName:'',
+                    cellRenderer:EditDQE,
+                         minWidth: 50
+                    }
+
+
+                    ];
+
+                 setFields(updatedCols)
 
 
 

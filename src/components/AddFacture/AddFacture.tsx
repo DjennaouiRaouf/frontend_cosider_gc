@@ -86,7 +86,7 @@ const AddFacture: React.FC<AddFactureProps> = ({refresh}) => {
         if (form.checkValidity()) {
             setValidated(false)
             
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addbl/`,Transform(formDataObject),{
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addfacture/`,Transform(formDataObject),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
                     'Content-Type': 'application/json',
@@ -98,17 +98,21 @@ const AddFacture: React.FC<AddFactureProps> = ({refresh}) => {
                     refresh();
                     setFormData(defaultState);
                     handleClose();
-                    dispatch(displayAlertMessage({variant:Variant.SUCCESS,message:'Bon de livraison ajouté'}))
+                    dispatch(displayAlertMessage({variant:Variant.SUCCESS,message:'Facture ajoutée'}))
 
                 })
                 .catch((error:any) => {
                     dispatch(displayAlertMessage({variant:Variant.DANGER,message:JSON.stringify(error.response.data,null,2)}))
                 });
+
+
         }
         else {
 
             setValidated(true)
         }
+
+
     }
     useEffect(() => {
         getFields();
