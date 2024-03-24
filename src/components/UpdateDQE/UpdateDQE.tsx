@@ -62,29 +62,30 @@ const UpdateDQE: React.FC<UpdateDQEProps> = ({refresh}) => {
  const handleSubmit = async(e: any) => {
         e.preventDefault();
         const form = e.currentTarget;
-        formData['contrat']=cid
-        const formDataObject:any=Object.assign({}, formData)
+        const dqe_id:string=encodeURIComponent(String(showEditDQEForm.id));
+        const formDataObject:any=Object.assign({}, formData);
+        formDataObject['contrat']=cid;
+        formDataObject['id']=showEditDQEForm.id;
+
         if (form.checkValidity()) {
             setValidated(false)
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/UpdateDQE/`,Transform(formDataObject),{
+
+                await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api_gc/updatedqe/`,Transform(formDataObject),{
                 headers: {
-                    Authorization: `Token ${Cookies.get("token")}`,
-                    'Content-Type': 'application/json',
+
+                  Authorization: `Token ${Cookies.get("token")}`,
+                  'Content-Type': 'application/json',
 
                 },
-
-            })
+                })
                 .then((response:any) => {
-                    refresh();
-                    handleClose();
 
                 })
                 .catch((error:any) => {
 
                 });
 
-
-        }
+            }
         else {
 
             setValidated(true)
