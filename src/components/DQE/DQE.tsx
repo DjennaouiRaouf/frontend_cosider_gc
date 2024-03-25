@@ -18,6 +18,7 @@ import {Humanize} from "../Utils/Utils";
 import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
 import EditDQE from "../ActionRenderer/EditDQE/EditDQE";
 import UpdateDQE from "../UpdateDQE/UpdateDQE";
+import DelDQE from "../ActionRenderer/DelDQE/DelDQE";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -104,7 +105,9 @@ const DQE: React.FC<any> = () => {
 
   }
 
-
+  const msg = (s:string) => {
+    alert(s)
+  }
 
   const getFields = async() => {
         await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/dqelistform/`,{
@@ -120,7 +123,17 @@ const DQE: React.FC<any> = () => {
                     headerName:'',
                     cellRenderer:EditDQE,
                          minWidth: 50
-                    }
+                    },
+                        {
+                            headerName:'',
+                            cellRenderer:DelDQE,
+                            minWidth: 50,
+                              cellRendererParams:{
+                                refresh:getData,
+
+                              }
+
+                        }
 
 
                     ];

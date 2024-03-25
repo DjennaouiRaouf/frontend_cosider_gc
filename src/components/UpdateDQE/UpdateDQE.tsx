@@ -80,6 +80,8 @@ const UpdateDQE: React.FC<UpdateDQEProps> = ({refresh}) => {
                 },
                 })
                 .then((response:any) => {
+                    refresh();
+                    handleClose();
 
                 })
                 .catch((error:any) => {
@@ -95,7 +97,7 @@ const UpdateDQE: React.FC<UpdateDQEProps> = ({refresh}) => {
 
     }
     const handleClose = () => {
-          console.log(showEditDQEForm)
+
         dispatch(hideEditDQE())
 
     }
