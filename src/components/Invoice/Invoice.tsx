@@ -14,6 +14,9 @@ import AddDQE from "../AddDQE/AddDQE";
 import {Humanize} from "../Utils/Utils";
 import {showAddFacture} from "../Slices/AddModalSlices";
 import AddFacture from "../AddFacture/AddFacture";
+import EditDQE from "../ActionRenderer/EditDQE/EditDQE";
+import DelDQE from "../ActionRenderer/DelDQE/DelDQE";
+import DelInvoice from "../ActionRenderer/DelInvoice/DelInvoice";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -120,7 +123,23 @@ const Invoice: React.FC<any> = () => {
         })
             .then((response:any) => {
 
-                 setFields(response.data.fields)
+                 const updatedCols:any[] = [...response.data.fields,
+
+                        {
+                            headerName:'',
+                            cellRenderer:DelInvoice,
+                            minWidth: 50,
+                              cellRendererParams:{
+                                refresh:getData,
+
+                              }
+
+                        }
+
+
+                    ];
+
+                 setFields(updatedCols)
 
 
 
