@@ -17,6 +17,7 @@ import {formatDate} from "../Utils/Utils";
 import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
 import SearchBL from "../SearchBL/SearchBL";
 import {showSearchBL} from "../Slices/SearchModalSlices";
+import DelBL from "../ActionRenderer/DelBL/DelBL";
 
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
@@ -118,11 +119,20 @@ const BonLivraison: React.FC<any> = () => {
 
                     const updatedCols:any[] = [...response.data.fields,
                      {
-                    headerName:'Imprimer ',
-                    cellRenderer:PrintBL,
-                         minWidth: 250
+                        headerName:' ',
+                        cellRenderer:PrintBL,
+                             minWidth: 250
+                     },
+                        {
+                             headerName:' ',
+                            cellRenderer:DelBL,
+                             minWidth: 50,
+                              cellRendererParams:{
+                                refresh:getData,
 
-                    }
+                              }
+
+                        }
 
 
                     ];
