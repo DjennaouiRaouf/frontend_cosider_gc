@@ -13,7 +13,7 @@ import {useDispatch} from "react-redux";
 import {showAddBL} from "../Slices/AddModalSlices";
 import AddBL from "../AddBL/AddBL";
 import AlertMessage from "../AlertMessage/AlertMessage";
-import {formatDate} from "../Utils/Utils";
+import {formatDate, Humanize} from "../Utils/Utils";
 import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
 import SearchBL from "../SearchBL/SearchBL";
 import {showSearchBL} from "../Slices/SearchModalSlices";
@@ -48,7 +48,7 @@ const BonLivraison: React.FC<any> = () => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const gridRef = useRef(null);
   const { cid } = useParams();
-
+  const[resume,setResume]=useState<any>({});
   const defaultColDefs: ColDef = {
     sortable: true,
     resizable: true,
@@ -97,7 +97,8 @@ const BonLivraison: React.FC<any> = () => {
       },
     })
         .then((response:any) => {
-          setData(response.data);
+          setData(response.data.bl);
+          setResume(response.data.extra)
         })
         .catch((error:any) => {
 
@@ -207,10 +208,10 @@ const BonLivraison: React.FC<any> = () => {
                                                       <div className="col me-2">
                                                           <div
                                                               className="text-uppercase text-success fw-bold text-xs mb-1">
-                                                              <span>Earnings (annual)</span>
+                                                              <span>Montant</span>
                                                           </div>
                                                           <div className="text-dark fw-bold h5 mb-0">
-                                                              <span>$215,000</span>
+                                                              <span>{Humanize(resume.mt) +"DA"}</span>
                                                           </div>
                                                       </div>
                                                       <div className="col-auto">
@@ -227,10 +228,10 @@ const BonLivraison: React.FC<any> = () => {
                                                       <div className="col me-2">
                                                           <div
                                                               className="text-uppercase text-success fw-bold text-xs mb-1">
-                                                              <span>Earnings (annual)</span>
+                                                              <span>Quantité Livrée</span>
                                                           </div>
                                                           <div className="text-dark fw-bold h5 mb-0">
-                                                              <span>$215,000</span>
+                                                              <span>{Humanize(resume.qt) +"T"}</span>
                                                           </div>
                                                       </div>
                                                       <div className="col-auto">
