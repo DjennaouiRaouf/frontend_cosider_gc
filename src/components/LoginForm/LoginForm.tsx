@@ -32,10 +32,8 @@ const LoginForm: React.FC<any> = () => {
     })
         .then((response) => {
           setPics(response.data);
-
         })
         .catch((error) => {
-
         });
 
   }
@@ -49,7 +47,6 @@ const [toast,setToast]=useState<any>({
 
 
   const authentification = async(e: any) => {
-
     e.preventDefault();
     const fd = new FormData();
     fd.append('username', formData.username);
@@ -65,10 +62,7 @@ const [toast,setToast]=useState<any>({
         })
         .catch((error:any) => {
                     setToast({shown:true,severity:'rgb(248,215,218)',header:'Authentification',body:JSON.stringify(error.response.data,null,2)})
-
         });
-
-
 
   }
 
