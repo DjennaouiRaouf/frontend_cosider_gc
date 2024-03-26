@@ -61,11 +61,10 @@ const [toast,setToast]=useState<any>({
           setAuthenticated(Cookies.get('token'));
           const role:string[]=String(Cookies.get('role')).split('|');
           setPermission(role)
-          setToast({shown:true,severity:'rgb(209,231,221)',header:'Ajout d\'utilisateur',body:'Utilisateur ajouté'})
 
         })
         .catch((error:any) => {
-                    setToast({shown:true,severity:'rgb(248,215,218)',header:'Ajout d\'utilisateur',body:JSON.stringify(error.response.data,null,2)})
+                    setToast({shown:true,severity:'rgb(248,215,218)',header:'Authentification',body:JSON.stringify(error.response.data,null,2)})
 
         });
 
