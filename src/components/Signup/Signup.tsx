@@ -196,6 +196,7 @@ const Signup: React.FC<any> = () => {
                                                   </strong>
                                               </Form.Label>
                                               {
+
                                                   field.name ==="password" ?
                                                       <Form.Control
                                                           name={field.name}
