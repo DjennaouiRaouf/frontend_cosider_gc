@@ -215,7 +215,10 @@ const BonLivraison: React.FC<any> = () => {
                                                           </div>
                                                       </div>
                                                       <div className="col-auto">
-                                                          <i className="fas fa-dollar-sign fa-2x text-gray-300"/>
+                                                          <i
+                                                              className="fas fa-money-bill-wave fa-2x text-gray-300"
+                                                              style={{color: "rgb(221, 223, 235)"}}
+                                                          />
                                                       </div>
                                                   </div>
                                               </div>
@@ -235,7 +238,10 @@ const BonLivraison: React.FC<any> = () => {
                                                           </div>
                                                       </div>
                                                       <div className="col-auto">
-                                                          <i className="fas fa-dollar-sign fa-2x text-gray-300"/>
+                                                          <i
+                                                              className="fas fa-balance-scale-right fa-2x text-gray-300"
+                                                              style={{color: "rgb(221, 223, 235)"}}
+                                                          />
                                                       </div>
                                                   </div>
                                               </div>
