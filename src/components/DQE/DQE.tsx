@@ -255,9 +255,13 @@ const DQE: React.FC<any> = () => {
                                           <div className="btn-group" role="group">
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={addD}>
+                                                  <i className="fas fa-plus" style={{marginRight: 5}}/>
+
                                                   Ajouter un dqe
                                               </button>
-                                              <button className="btn btn-primary" type="button"style={{background: "#df162c", borderWidth: 0}} onClick={searchD}>
+                                              <button className="btn btn-primary" type="button"
+                                                      style={{background: "#df162c", borderWidth: 0}} onClick={searchD}>
+                                                  <i className="fas fa-search" style={{marginRight: 5}}/>
                                                   Rechercher
                                               </button>
 

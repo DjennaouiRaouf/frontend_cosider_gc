@@ -223,32 +223,14 @@ const Contrat: React.FC<any> = () => {
                                           <div className="btn-group" role="group">
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={addC}>
+                                                  <i className="fas fa-plus" style={{marginRight: 5}}/>
                                                   Nouveau Contrat
                                               </button>
-                                              <button className="btn btn-primary" type="button"style={{background: "#df162c", borderWidth: 0}} onClick={searchC}>
+                                              <button className="btn btn-primary" type="button"
+                                                      style={{background: "#df162c", borderWidth: 0}} onClick={searchC}>
+                                                  <i className="fas fa-search" style={{marginRight: 5}}/>
                                                   Rechercher
                                               </button>
-                                              <div className="dropdown btn-group" role="group">
-                                                  <button
-                                                      className="btn btn-primary dropdown-toggle"
-                                                      aria-expanded="false"
-                                                      data-bs-toggle="dropdown"
-                                                      type="button"
-                                                  >
-                                                      Dropdown{" "}
-                                                  </button>
-                                                  <div className="dropdown-menu">
-                                                      <a className="dropdown-item" href="#">
-                                                          First Item
-                                                      </a>
-                                                      <a className="dropdown-item" href="#">
-                                                          Second Item
-                                                      </a>
-                                                      <a className="dropdown-item" href="#">
-                                                          Third Item
-                                                      </a>
-                                                  </div>
-                                              </div>
 
                                           </div>
                                       </div>

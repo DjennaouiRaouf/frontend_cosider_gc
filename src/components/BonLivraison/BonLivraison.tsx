@@ -247,9 +247,13 @@ const BonLivraison: React.FC<any> = () => {
                                           <div className="btn-group" role="group">
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={addBL}>
+                                                  <i className="fas fa-plus" style={{marginRight: 5}}/>
                                                   Ajouter un Bon de livraison
                                               </button>
-                                              <button className="btn btn-primary" type="button"style={{background: "#df162c", borderWidth: 0}} onClick={searchBL}>
+                                              <button className="btn btn-primary" type="button"
+                                                      style={{background: "#df162c", borderWidth: 0}}
+                                                      onClick={searchBL}>
+                                                  <i className="fas fa-search" style={{marginRight: 5}}/>
                                                   Rechercher
                                               </button>
                                           </div>

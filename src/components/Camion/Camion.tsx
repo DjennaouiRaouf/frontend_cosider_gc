@@ -199,9 +199,12 @@ const Camion: React.FC<any> = () => {
                                           <div className="btn-group" role="group">
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={addC}>
+                                                  <i className="fas fa-plus" style={{marginRight: 5}}/>
                                                   Nouveau Camion
                                               </button>
-                                              <button className="btn btn-primary" type="button"style={{background: "#df162c", borderWidth: 0}} onClick={searchC}>
+                                              <button className="btn btn-primary" type="button"
+                                                      style={{background: "#df162c", borderWidth: 0}} onClick={searchC}>
+                                                  <i className="fas fa-search" style={{marginRight: 5}}/>
                                                   Rechercher
                                               </button>
 
