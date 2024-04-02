@@ -10,7 +10,11 @@ import {ColDef} from "ag-grid-community";
 import numeral from "numeral";
 import Cookies from "js-cookie";
 import {useDispatch} from "react-redux";
-import {Humanize} from "../Utils/Utils";;
+import {Humanize} from "../Utils/Utils";
+import AddAvance from "../AddAvance/AddAvance";
+import {showAddAvance} from "../Slices/AddModalSlices";
+
+;
 
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
@@ -96,9 +100,7 @@ const Avances: React.FC<any> = () => {
 
   }
 
-  const msg = (s:string) => {
-    alert(s)
-  }
+
 
   const getFields = async() => {
         await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/avancelistform/`,{
@@ -151,7 +153,7 @@ const Avances: React.FC<any> = () => {
 
     const dispatch=useDispatch();
     const addD = () => {
-
+        dispatch(showAddAvance());
     }
       const searchD = () => {
 
@@ -160,6 +162,7 @@ const Avances: React.FC<any> = () => {
 
   return (
       <>
+          <AddAvance refresh={()=>{getData('')}}/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
@@ -228,11 +231,7 @@ const Avances: React.FC<any> = () => {
 
                                                   Ajouter un Avances
                                               </button>
-                                              <button className="btn btn-primary" type="button"
-                                                      style={{background: "#df162c", borderWidth: 0}} onClick={searchD}>
-                                                  <i className="fas fa-search" style={{marginRight: 5}}/>
-                                                  Rechercher
-                                              </button>
+
 
                                           </div>
                                       </div>

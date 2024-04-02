@@ -10,6 +10,7 @@ export interface AddDataModalState {
     showAddBLForm:boolean;
     showAddCamionForm:boolean;
     showAddFactureForm:boolean;
+    showAddAvanceForm:boolean;
 }
 
 const initialState: AddDataModalState = {
@@ -19,7 +20,7 @@ const initialState: AddDataModalState = {
     showAddBLForm:false,
     showAddCamionForm:false,
     showAddFactureForm:false,
-
+    showAddAvanceForm:false,
 
 };
 
@@ -53,6 +54,19 @@ export const AddDataModal = createSlice({
         hideAddDQE: (state) => {
             state.showAddDQEForm=false
         },
+
+
+
+         showAddAvance: (state) => {
+
+            state.showAddAvanceForm=true
+
+        },
+        hideAddAvance: (state) => {
+            state.showAddAvanceForm=false
+        },
+
+
 
         showAddBL: (state) => {
 
@@ -88,6 +102,7 @@ export const AddDataModal = createSlice({
 
 export const { showAddContrat,hideAddContrat,
 showAddClient,hideAddClient,
+    showAddAvance,hideAddAvance,
 showAddDQE,hideAddDQE,
 showAddBL,hideAddBL,
 showAddCamion,hideAddCamion,
