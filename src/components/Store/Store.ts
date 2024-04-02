@@ -4,6 +4,7 @@ import AddDataModalReducer from "../Slices/AddModalSlices";
 import SearchDataModalReducer from "../Slices/SearchModalSlices";
 import AlertMessageReducer from "../Slices/AlertMessageSlices";
 import EditDataModalReducer from "../Slices/EditModalSlices";
+import DetailDataModalReducer from "../Slices/DetailModalSlices";
 
 const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
         searchDataModalReducer: SearchDataModalReducer,
         alertMessageReducer:AlertMessageReducer,
         editDataModalReducer:EditDataModalReducer,
+        detailDataModalReducer:DetailDataModalReducer,
     },
 
 });

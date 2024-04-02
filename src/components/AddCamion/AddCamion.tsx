@@ -8,6 +8,7 @@ import {hideAddCamion} from "../Slices/AddModalSlices";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {Transform} from "../Utils/Utils";
+import {displayAlertMessage, Variant} from "../Slices/AlertMessageSlices";
 
 interface AddCamionProps {
         refresh:()=>void,
@@ -93,8 +94,11 @@ const AddCamion: React.FC<AddCamionProps> = ({refresh}) => {
                     setFormData(defaultState);
                     handleClose();
                     refresh();
+                    dispatch(displayAlertMessage({variant: Variant.SUCCESS, message: "Camion ajouté"}))
                 })
                 .catch((error:any) => {
+                    dispatch(displayAlertMessage({variant:Variant.DANGER,message:JSON.stringify(error.response.data,null,2)}))
+
                 });
 
 

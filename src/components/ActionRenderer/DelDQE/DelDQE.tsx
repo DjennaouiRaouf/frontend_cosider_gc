@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
 import {useSearchParams} from "react-router-dom";
+import {displayAlertMessage, Variant} from "../../Slices/AlertMessageSlices";
 
 
 type DelDQEProps = {
@@ -34,6 +35,8 @@ const DelDQE: React.FC<DelDQEProps> = (props) => {
                 }, '');
 
                 props.refresh(queryString);
+                dispatch(displayAlertMessage({variant: Variant.SUCCESS, message: "DQE Annulé"}))
+
             })
             .catch(error => {
             });

@@ -19,6 +19,7 @@ import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
 import EditDQE from "../ActionRenderer/EditDQE/EditDQE";
 import UpdateDQE from "../UpdateDQE/UpdateDQE";
 import DelDQE from "../ActionRenderer/DelDQE/DelDQE";
+import AlertMessage from "../AlertMessage/AlertMessage";
 
 
 const InfoRenderer: React.FC<any> = (props) => {
@@ -188,6 +189,7 @@ const DQE: React.FC<any> = () => {
 
   return (
       <>
+          <AlertMessage/>
           <AddDQE refresh={()=>{getData('')}}/>
           <SearchDQE/>
           <UpdateDQE refresh={()=>{getData('')}}/>

@@ -16,6 +16,7 @@ import {showSearchCamion} from "../Slices/SearchModalSlices";
 import Cookies from "js-cookie";
 import AddCamion from "../AddCamion/AddCamion";
 import SearchCamion from "../SearchCamion/SearchCamion";
+import AlertMessage from "../AlertMessage/AlertMessage";
 
 
 
@@ -140,6 +141,7 @@ const Camion: React.FC<any> = () => {
   return (
       <>
           <>
+                <AlertMessage/>
                 <AddCamion refresh={()=>getData('')}/>
                 <SearchCamion/>
           </>

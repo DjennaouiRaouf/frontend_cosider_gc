@@ -16,8 +16,11 @@ import {showAddFacture} from "../Slices/AddModalSlices";
 import AddFacture from "../AddFacture/AddFacture";
 import EditDQE from "../ActionRenderer/EditDQE/EditDQE";
 import DelDQE from "../ActionRenderer/DelDQE/DelDQE";
+import DetailInvoice from "../ActionRenderer/DetailInvoice/DetailInvoice";
+import AlertMessage from "../AlertMessage/AlertMessage";
 import DelInvoice from "../ActionRenderer/DelInvoice/DelInvoice";
-
+import DetailFacture from "../DetailFacture/DetailFacture"
+import Encaissement from "../ActionRenderer/Encaissement/Encaissement";
 
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
@@ -123,19 +126,31 @@ const Invoice: React.FC<any> = () => {
         })
             .then((response:any) => {
 
-                 const updatedCols:any[] = [...response.data.fields,
-
-                        {
+                 const updatedCols:any[] = [
+                     {
                             headerName:'',
                             cellRenderer:DelInvoice,
-                            minWidth: 50,
+                            width: 20,
                               cellRendererParams:{
                                 refresh:getData,
-
                               }
+                        },
+                         {
+                            headerName:'',
+                            cellRenderer:DetailInvoice,
+                            width: 20,
+                              cellRendererParams:{
+                                refresh:getData,
+                              }
+                        },
+                        {
+                            headerName:'',
+                            cellRenderer:Encaissement,
+                            width: 20,
 
                         }
 
+                     ,...response.data.fields,
 
                     ];
 
@@ -180,16 +195,17 @@ const Invoice: React.FC<any> = () => {
     const addD = () => {
         dispatch(showAddFacture())
     }
-      const searchD = () => {
 
+    const searchD = () => {
 
     }
 
 
   return (
       <>
+          <AlertMessage/>
           <AddFacture refresh={()=>{getData('')}}/>
-
+            <DetailFacture/>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
