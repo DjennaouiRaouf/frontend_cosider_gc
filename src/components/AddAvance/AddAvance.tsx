@@ -84,7 +84,7 @@ const AddAvance: React.FC<AddAvanceProps> = ({refresh}) => {
         const formDataObject:any=Object.assign({}, formData)
         if (form.checkValidity()) {
             setValidated(false)
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/AddAvance/`,Transform(formDataObject),{
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}api_gc/addavance/`,Transform(formDataObject),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
                     'Content-Type': 'application/json',
