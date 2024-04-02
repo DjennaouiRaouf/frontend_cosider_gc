@@ -101,7 +101,7 @@ const Avances: React.FC<any> = () => {
   }
 
   const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/Avanceslistform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/avancelistform/`,{
             headers: {
                 'Content-Type': 'application/json',
 
