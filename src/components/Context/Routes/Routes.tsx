@@ -14,6 +14,8 @@ import BLParams from "../../BonLivraison/BLParams";
 import Camion from "../../Camion/Camion";
 import InvoiceParams from "../../Invoice/InvoiceParams";
 import Invoice from "../../Invoice/Invoice";
+import Avances from "../../Avances/Avances";
+import AvancesParams from "../../Avances/AvancesParams";
 
 const Routes: React.FC<any> = () => {
 
@@ -158,6 +160,40 @@ const Routes: React.FC<any> = () => {
                       <>
                           <NavigationBar/>
                           <DQE/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+
+              <Route
+              path="/avance"
+              element={
+                  authenticated ? (
+                      <>
+                          <AvancesParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+               <Route
+              path="/avance/liste_avance/:cid"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <Avances/>
 
 
 

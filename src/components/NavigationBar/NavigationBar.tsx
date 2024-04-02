@@ -76,8 +76,9 @@ const NavigationBar: React.FC<any> = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/contrat">Contrats</Nav.Link>
                         <Nav.Link href="/client">Clients</Nav.Link>
+                        <Nav.Link href="/contrat">Contrats</Nav.Link>
+                        <Nav.Link href="/avance">Avances</Nav.Link>
                         <Nav.Link href="/dqe">DQE</Nav.Link>
                         <Nav.Link href="/bl">Bons de livraison</Nav.Link>
                         <Nav.Link href="/invoice">factures</Nav.Link>
