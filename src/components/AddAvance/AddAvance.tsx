@@ -55,7 +55,7 @@ const AddAvance: React.FC<AddAvanceProps> = ({refresh}) => {
 
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/dqeaddform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/avanceformadd/`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
