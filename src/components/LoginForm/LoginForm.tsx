@@ -119,27 +119,27 @@ const [toast,setToast]=useState<any>({
                         style={{borderWidth: "1px", borderRadius: "8px"}}>
                 {pics.map((item, index) => (
                     <Carousel.Item key={index} style={{borderWidth: "1px", borderRadius: "8px"}}>
-                      <img
-                          src={item.src}
-                          alt={""}
-                          height={500}
-                          className="d-block w-100"
-                          style={{borderWidth: "1px", borderRadius: "8px"}}
-                      />
-
+                        <div
+                            style={{
+                                background: `url(${item.src}) center / cover no-repeat`,
+                                height: 350,
+                                width: 610,
+                                borderRadius: 5
+                            }}
+                        />
                     </Carousel.Item>
                 ))}
               </Carousel>
 
             </div>
 
-            <div className="col-md-10 col-lg-5 mx-auto">
+              <div className="col-md-10 col-lg-5 mx-auto">
 
-              <Form className="bg-body-tertiary p-4 p-md-5 border rounded-3"
-                    noValidate validated={validated}
-                    onSubmit={authentification}>
-                <div className="form-floating mb-3">
-                  <Form.Group className="w-100" controlId="validation1">
+                  <Form className="bg-body-tertiary p-4 p-md-5 border rounded-3"
+                        noValidate validated={validated}
+                        onSubmit={authentification}>
+                      <div className="form-floating mb-3">
+                          <Form.Group className="w-100" controlId="validation1">
                     <Form.Control
                         name="username"
                         required
