@@ -130,11 +130,9 @@ const [toast,setToast]=useState<any>({
                     </Carousel.Item>
                 ))}
               </Carousel>
-
             </div>
 
               <div className="col-md-10 col-lg-5 mx-auto">
-
                   <Form className="bg-body-tertiary p-4 p-md-5 border rounded-3"
                         noValidate validated={validated}
                         onSubmit={authentification}>
