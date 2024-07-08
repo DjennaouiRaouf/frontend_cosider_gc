@@ -154,7 +154,7 @@ const Routes: React.FC<any> = () => {
 
 
                          <Route
-              path="/dqe/liste_dqe/:cid"
+              path="/dqe/liste_dqe/:cid/:av"
               element={
                   authenticated ? (
                       <>

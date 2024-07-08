@@ -16,19 +16,24 @@ import contrat from "../Contrat/Contrat";
 
 const DQEParams: React.FC<any> = () => {
     const [display, setDisplay] = useState(true);
-     const [selectedOption, setSelectedOption] = useState<string[]>([]);
-    const [options,setOptions]=useState<string[]>([]);
+     const [selectedAvenant, setSelectedAvenant] = useState<string[]>([]);
+    const [selectedContrat, setSelectedContrat] = useState<string[]>([]);
+
+     const [avenant,setAvenant]=useState<string[]>([]);
+    const [contrat,setContrat]=useState<string[]>([]);
+
     const navigate=useNavigate();
     const hide = () => setDisplay(false);
   const show = () => setDisplay(true);
   const valider = () => {
     hide();
-    const val:string=selectedOption[0]
-     navigate(`liste_dqe/${encodeURIComponent(val)}`, )
+    const val:string=selectedContrat[0]
+    const val2:string=selectedAvenant[0]
+    navigate(`liste_dqe/${encodeURIComponent(val)}/${encodeURIComponent(val2)}`, )
 
   }
 
-  const getContrats = async() => {
+  const getContrat = async() => {
        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/contractkeys/`,{
             headers: {
                 'Content-Type': 'application/json',
@@ -37,26 +42,57 @@ const DQEParams: React.FC<any> = () => {
         })
             .then((response:any) => {
 
-                 setOptions(response.data)
+
+                 setContrat(response.data)
+
 
 
 
             })
             .catch((error:any) => {
-
+                setContrat([])
             });
 
 
   }
 
+  const getAvenant = async(c:string) => {
+    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/avenant/?num=${encodeURIComponent(c)}`,{
+         headers: {
+             'Content-Type': 'application/json',
+
+         },
+     })
+         .then((response:any) => {
+
+              setAvenant(response.data)
+
+
+
+
+         })
+         .catch((error:any) => {
+            setAvenant([])
+         });
+
+
+}
+
+
     const handleChange = (selected:any) => {
-    setSelectedOption(selected);
+    setSelectedAvenant(selected);
+
+
+  };
+    const handleChange2 = (selected:any) => {
+    setSelectedContrat(selected);
+   getAvenant(selected)
 
 
   };
 
  useEffect(() => {
-        getContrats();
+        getContrat();
     },[]);
 
 
@@ -68,32 +104,50 @@ const DQEParams: React.FC<any> = () => {
         keyboard={false}
       >
         <Modal.Header >
-          <Modal.Title>Saisir le numero du contrat</Modal.Title>
+          <Modal.Title>Saisir le N° Contrat + N° d'avenant</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-        <div className="mb-3">
-                                          <label className="form-label" htmlFor="username">
-                                              <strong>
-                                                  Numero du Contrat
-                                              </strong>
-                                          </label>
-                                                                <>
-                                                                    <Typeahead
-                                                                        id={'contrat_id'}
-                                                                         onChange={handleChange}
-                                                                          options={options}
-                                                                          selected={selectedOption}
-                                                                          placeholder="Choisir un contrat"
+          <Modal.Body>
+              <div className="mb-3">
+                  <label className="form-label" htmlFor="username">
+                      <strong>
+                          N° Contrat
+                      </strong>
+                  </label>
+                  <>
+                      <Typeahead
+                          id={'contrat_id'}
+                          onChange={handleChange2}
+                          options={contrat}
+                          selected={selectedContrat}
+                          placeholder="Choisir un Contrat"
 
-                                                                    />
-                                                                </>
-        </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" style={{background: "#df162c", borderWidth: 0}} onClick={valider}>
-            Envoyer
-          </Button>
-        </Modal.Footer>
+                      />
+                  </>
+              </div>
+              <div className="mb-3">
+                  <label className="form-label" htmlFor="username">
+                      <strong>
+                          N° d'avenant
+                      </strong>
+                  </label>
+                  <>
+                      <Typeahead
+                          id={'contrat_id'}
+                          onChange={handleChange}
+                          options={avenant}
+                          selected={selectedAvenant}
+                          placeholder="Choisir un Avenant"
+
+                      />
+                  </>
+              </div>
+
+          </Modal.Body>
+          <Modal.Footer>
+              <Button variant="secondary" style={{background: "#df162c", borderWidth: 0}} onClick={valider}>
+                  Envoyer
+              </Button>
+          </Modal.Footer>
       </Modal>
 
 
