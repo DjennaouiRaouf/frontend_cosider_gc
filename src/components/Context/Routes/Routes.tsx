@@ -16,6 +16,7 @@ import InvoiceParams from "../../Invoice/InvoiceParams";
 import Invoice from "../../Invoice/Invoice";
 import Avances from "../../Avances/Avances";
 import AvancesParams from "../../Avances/AvancesParams";
+import DQECumuleParams from "../../DQE/DQECumuleParams";
 
 const Routes: React.FC<any> = () => {
 
@@ -58,6 +59,21 @@ const Routes: React.FC<any> = () => {
                   authenticated ? (
                       <>
                           <DQEParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+              <Route
+              path="/dqe_cumule"
+              element={
+                  authenticated ? (
+                      <>
+                          <DQECumuleParams/>
 
 
 
@@ -169,7 +185,22 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
+   <Route
+              path="/dqe_cumule/liste_dqe_cumule/:cid"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <DQE/>
 
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
 
               <Route
               path="/avance"

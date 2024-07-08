@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Container, Nav, Navbar} from "react-bootstrap";
+import { Nav, Navbar, NavDropdown} from "react-bootstrap";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
@@ -67,7 +67,7 @@ const NavigationBar: React.FC<any> = () => {
   return (
       <>
          <Navbar expand="lg" className="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
-            <Container style={{border:"none"}}>
+            <div className={'container-fluid'} style={{border:"none"}}>
                 <Navbar.Brand>
               <span>
                 <img width={100} height={39} src={logo} />
@@ -80,6 +80,11 @@ const NavigationBar: React.FC<any> = () => {
                         <Nav.Link href="/contrat">Contrats</Nav.Link>
                         <Nav.Link href="/avance">Avances</Nav.Link>
                         <Nav.Link href="/dqe">DQE</Nav.Link>
+                          <NavDropdown title="DQE" id="basic-nav-dropdown">
+                             <NavDropdown.Item href="/dqe">DQE + avenants</NavDropdown.Item>
+                            <NavDropdown.Item href="/dqe_cumule">DQE cumulé</NavDropdown.Item>
+
+                        </NavDropdown>
                         <Nav.Link href="/bl">Bons de livraison</Nav.Link>
                         <Nav.Link href="/invoice">factures</Nav.Link>
                         <Nav.Link href="/camions">Camions</Nav.Link>
@@ -120,7 +125,7 @@ const NavigationBar: React.FC<any> = () => {
                         </li>
                     </Nav>
                 </Navbar.Collapse>
-            </Container>
+            </div>
         </Navbar>
       </>
   );
