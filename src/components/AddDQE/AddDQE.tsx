@@ -15,6 +15,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {ColDef} from "ag-grid-community";
 import {useParams} from "react-router-dom";
+import { Console } from "console";
 
 interface AddDQEProps {
     refresh:()=>void,
@@ -28,6 +29,7 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
     const [fields,setFields]=useState<any[]>([]);
     const [defaultState,setDefaultState]=useState<any>({});
     const [formData, setFormData] = useState<any>({});
+    const [libProd,setLibProd]=useState<string>('');
     const opt:any[] = [
             {
                 value: false,
@@ -55,7 +57,7 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
 
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/dqeaddform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/dqeaddupdateform/`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -76,12 +78,15 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
 
     }
 
-    const { cid } = useParams();
+    const { cid,av } = useParams();
  const handleSubmit = async(e: any) => {
         e.preventDefault();
         const form = e.currentTarget;
-        formData['contrat']=cid
+        const cid_av:string=`${cid}(${av})`
+        
+        formData['contrat']=cid_av
         const formDataObject:any=Object.assign({}, formData)
+        console.log(formDataObject)
         if (form.checkValidity()) {
             setValidated(false)
             await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/adddqe/`,Transform(formDataObject),{
@@ -124,17 +129,19 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
 
     }
     const handleChange = (ref:any, op:any) => {
+        
         if(op.length > 0 ){
             setFormData({
                 ...formData,
                 [ref]: op,
             });
-
+            setLibProd(op[0]['lib_prod'])
         }else {
             setFormData({
                 ...formData,
                 [ref]: [],
             })
+            setLibProd('')
         }
 
 
@@ -160,6 +167,7 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
                                               <div className="mb-3">
                                                   <label className="form-label" htmlFor="username">
                                                       <strong>
+                                                        
                                                           {field.label + " "}
                                                           {field.required ?
                                                               <span style={{
@@ -177,10 +185,24 @@ const AddDQE: React.FC<AddDQEProps> = ({refresh}) => {
 
                                                                 </span>
                                                           }
+                                                          {field.name==='prixProduit' ?
+                                                              <span style={{
+                                                                  fontWeight: "bold",
+                                                                  marginLeft:5
+                                                              }}> 
+                                                                  { libProd !=='' &&
+                                                                    (<>
+                                                                        ({libProd})
+                                                                    </>)
+                                                                  
+                                                                  }
+                                                            </span> :
+                                                              <span></span>
+                                                          }
                                                       </strong>
                                                   </label>
                                                   {
-                                                      field.type === "PrimaryKeyRelatedField" ?
+                                                      field.type === "ForeignKey" ?
                                                           <>
                                                               <Typeahead
                                                                   multiple={false}

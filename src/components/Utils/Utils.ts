@@ -11,17 +11,21 @@ export const Humanize = (value:any): string => {
 
 
 export const Transform =(formData:any):any => {
+   
+    const newFormData:any=new FormData();
     for (const key in formData) {
         if (formData.hasOwnProperty(key)) {
             if (Array.isArray(formData[key]) && formData[key].length > 0) {
-                formData[key]=formData[key][0].value;
+                newFormData.append(key,formData[key][0].value)
+                
             }
-            if (Array.isArray(formData[key]) && formData[key].length === 0) {
-                formData[key]='';
+            if (!Array.isArray(formData[key])) {
+                newFormData.append(key,formData[key])
             }
+            
         }
     }
-    return(formData)
+    return newFormData
 }
 
 

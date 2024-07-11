@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 interface Obj {
     [key: string]: any;
@@ -11,10 +12,15 @@ export interface AddDataModalState {
     showAddCamionForm:boolean;
     showAddFactureForm:boolean;
     showAddAvanceForm:boolean;
+    showAddAvenantForm:any;
 }
 
 const initialState: AddDataModalState = {
     showAddContratForm:false,
+    showAddAvenantForm:{
+        flag:false,
+        id:null
+    },
     showAddClientForm:false,
     showAddDQEForm:false,
     showAddBLForm:false,
@@ -36,7 +42,24 @@ export const AddDataModal = createSlice({
         hideAddContrat: (state) => {
             state.showAddContratForm=false
         },
-        
+
+        showAddAvenant: (state,action: PayloadAction<any>) => {
+            console.log(action.payload);
+            state.showAddAvenantForm={
+                flag:true,
+                id:action.payload
+            }
+            
+        },
+        hideAddAvenant: (state) => {
+            state.showAddAvenantForm={
+                flag:true,
+                id:null
+            }
+        },
+
+
+
            showAddClient: (state) => {
 
             state.showAddClientForm=true
@@ -47,7 +70,7 @@ export const AddDataModal = createSlice({
         },
     
          showAddDQE: (state) => {
-
+            
             state.showAddDQEForm=true
 
         },
@@ -106,6 +129,7 @@ showAddClient,hideAddClient,
 showAddDQE,hideAddDQE,
 showAddBL,hideAddBL,
 showAddCamion,hideAddCamion,
+showAddAvenant,hideAddAvenant,
 showAddFacture,hideAddFacture} = AddDataModal.actions;
 
 export default AddDataModal.reducer;

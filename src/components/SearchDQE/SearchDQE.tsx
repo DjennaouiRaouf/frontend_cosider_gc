@@ -99,19 +99,10 @@ const SearchDQE: React.FC<any> = () => {
     e.preventDefault();
     const url_tmp:string[]=[];
     const formDataObject=Transform(formData)
-    Object.entries(formDataObject).forEach(([key, value], index) => {
-      const val:string=String(value);
-
-      if(index === 0){
-
-        url_tmp.push(`${key}=${encodeURIComponent(val)}`);
-      }
-      if(index >= 1){
-        url_tmp.push(`&${key}=${encodeURIComponent(val)}`);
-      }
-
-    });
-
+   
+    for (let [key, value] of formDataObject.entries()) {
+        url_tmp.push(`${key}=${encodeURIComponent(value)}`);
+    }
     const queryParamsString = new URLSearchParams(searchParams).toString(); // Convert query parameters to string
     const newLocation = {
       pathname: '', // New route path

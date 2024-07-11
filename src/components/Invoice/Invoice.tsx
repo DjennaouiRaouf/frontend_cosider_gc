@@ -14,8 +14,7 @@ import AddDQE from "../AddDQE/AddDQE";
 import {Humanize} from "../Utils/Utils";
 import {showAddFacture} from "../Slices/AddModalSlices";
 import AddFacture from "../AddFacture/AddFacture";
-import EditDQE from "../ActionRenderer/EditDQE/EditDQE";
-import DelDQE from "../ActionRenderer/DelDQE/DelDQE";
+
 import DetailInvoice from "../ActionRenderer/DetailInvoice/DetailInvoice";
 import AlertMessage from "../AlertMessage/AlertMessage";
 import DelInvoice from "../ActionRenderer/DelInvoice/DelInvoice";

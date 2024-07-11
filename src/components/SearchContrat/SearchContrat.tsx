@@ -98,26 +98,18 @@ const SearchContrat: React.FC<any> = () => {
  const handleSubmit = async(e: any) => {
     e.preventDefault();
     const url_tmp:string[]=[];
+    console.log(formData)
     const formDataObject=Transform(formData)
-    Object.entries(formDataObject).forEach(([key, value], index) => {
-      const val:string=String(value);
-
-      if(index === 0){
-
-        url_tmp.push(`${key}=${encodeURIComponent(val)}`);
-      }
-      if(index >= 1){
-        url_tmp.push(`&${key}=${encodeURIComponent(val)}`);
-      }
-
-    });
-
+    
+    for (let [key, value] of formDataObject.entries()) {
+        url_tmp.push(`${key}=${encodeURIComponent(value)}`);
+    }
     const queryParamsString = new URLSearchParams(searchParams).toString(); // Convert query parameters to string
     const newLocation = {
       pathname: '', // New route path
       search: queryParamsString, // Append existing query parameters
     };
-
+        
         navigate(newLocation);
         navigate(`?${url_tmp.join('')}`);
         dispatch(hideSearchContrat());
@@ -132,7 +124,7 @@ const SearchContrat: React.FC<any> = () => {
                <Form
                       noValidate validated={validated} onSubmit={handleSubmit} >
         <Modal.Header closeButton>
-          <Modal.Title>Rechercher un contrat ou un bon de commande</Modal.Title>
+          <Modal.Title>Rechercher un contrat</Modal.Title>
         </Modal.Header>
           <Modal.Body>
               <div className="container-fluid">
@@ -208,7 +200,7 @@ const SearchContrat: React.FC<any> = () => {
                                                                                 
                                                                                 className="w-100"
                                                                                 type="text"
-                                                                                value={formData[field.name]}
+                                                                                value={formData[field.name]||''}
                                                                                 onChange={(e)=>handleInputChange(e)}
                                                                             />
 

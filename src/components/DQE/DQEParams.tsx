@@ -41,7 +41,7 @@ const DQEParams: React.FC<any> = () => {
             },
         })
             .then((response:any) => {
-
+                
 
                  setContrat(response.data)
 
@@ -64,8 +64,7 @@ const DQEParams: React.FC<any> = () => {
          },
      })
          .then((response:any) => {
-
-              setAvenant(response.data)
+            setAvenant(response.data)
 
 
 
@@ -86,7 +85,7 @@ const DQEParams: React.FC<any> = () => {
   };
     const handleChange2 = (selected:any) => {
     setSelectedContrat(selected);
-   getAvenant(selected)
+    getAvenant(selected[0])
 
 
   };
@@ -116,6 +115,7 @@ const DQEParams: React.FC<any> = () => {
                   <>
                       <Typeahead
                           id={'contrat_id'}
+
                           onChange={handleChange2}
                           options={contrat}
                           selected={selectedContrat}
@@ -133,6 +133,7 @@ const DQEParams: React.FC<any> = () => {
                   <>
                       <Typeahead
                           id={'contrat_id'}
+                           
                           onChange={handleChange}
                           options={avenant}
                           selected={selectedAvenant}

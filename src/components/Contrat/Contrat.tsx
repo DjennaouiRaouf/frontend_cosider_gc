@@ -2,24 +2,34 @@ import * as React from "react";
 import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-import {ColDef} from "ag-grid-community";
+import { AgGridReact, CustomCellRendererProps } from "ag-grid-react";
+import { ColDef } from "ag-grid-enterprise";
+import "ag-grid-enterprise";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 import numeral from "numeral";
 import {Button,Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
-import {showAddContrat} from "../Slices/AddModalSlices";
+import {showAddAvenant, showAddContrat} from "../Slices/AddModalSlices";
 import AddContrat from "../AddContrat/AddContrat";
 import {showSearchContrat} from "../Slices/SearchModalSlices";
 import SearchContrat from "../SearchContrat/SearchContrat";
-
-
+import Badge from 'react-bootstrap/Badge';
+import AddAvenant from "../AddAvenant/AddAvenant";
+import {fetchFields, fetchState, showEdit} from "../Slices/EditModalSlices";
 
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
+  
+  const dispatch=useDispatch();
+  const addAvenant = () =>{
+    let id=encodeURIComponent(props.data.id)
+    
+    dispatch(fetchFields(`/forms/contrataddupdateform/?id=${id}`))
+    dispatch(fetchState(`/forms/contrataddupdateform/?id=${id}`))
+    dispatch(showEdit({id:props.data.id}))
+  }
 
   switch (props.column.colId) {
 
@@ -27,12 +37,39 @@ const InfoRenderer: React.FC<any> = (props) => {
       return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
     case 'montant_ttc' :
       return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
+    case 'avenant':
+      if(value || value === 0)
+      {
+          return <button className="btn btn-primary btn-sm" onClick={addAvenant} data-bs-toggle="tooltip" data-bs-placement="bottom"  title={"Ajouter Avenant N° "+(value+1)} style={{background: "#df162c", borderWidth: 0}} type="button">
+          {value}
+        </button> 
+          
+      }else{
+          return <span></span>
+      }
+      
+
     case 'rg':
-      return <span>{value+" %"}</span>
+      if(value)
+      {
+        return <span>{value+" %"}</span>
+      }else{
+        return <span></span>
+      }
     case 'tva':
-      return <span>{value+" %"}</span>
+      if(value)
+        {
+          return <span>{value+" %"}</span>
+        }else{
+          return <span></span>
+        }
     case 'rabais':
-      return <span>{value+" %"}</span>
+      if(value)
+        {
+          return <span>{value+" %"}</span>
+        }else{
+          return <span></span>
+        }
     default:
       return <span>{value}</span>
   }
@@ -165,6 +202,8 @@ const Contrat: React.FC<any> = () => {
       <>
           <>
             <AddContrat refresh={()=>{getData('')}}/>
+            <AddAvenant refresh={()=>{getData('')}}/>
+            
             <SearchContrat/>
           </>
           <div id="wrapper">
@@ -196,14 +235,22 @@ const Contrat: React.FC<any> = () => {
                                   </div>
                                   <div
                                         className="ag-theme-alpine mt-4"
-                                      style={{ height: 500,width:"100%" }}
+                                                                                             style={{overflowY:"hidden",width:"100%" }}
+
 
                                   >
                                     <AgGridReact ref={gridRef}
+                                           suppressAggFuncInHeader={true}
+
                                            rowData={data} columnDefs={fields}
                                            gridOptions={gridOptions}
                                            onRowClicked={handleRowClick}
-
+                                                 groupDisplayType={"multipleColumns"}
+                                                 suppressContextMenu={true}
+                                                 animateRows={true}
+                                                 groupSelectsChildren={true}
+                                                 rowSelection="multiple"
+domLayout='autoHeight'
 
                                     />
 

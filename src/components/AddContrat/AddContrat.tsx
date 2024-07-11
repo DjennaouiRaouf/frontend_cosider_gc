@@ -48,7 +48,7 @@ const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
 
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/contrataddform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/contrataddupdateform/`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -143,7 +143,7 @@ const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
               <Form
                       noValidate validated={validated} onSubmit={handleSubmit} >
         <Modal.Header closeButton>
-          <Modal.Title>Ajouter un contrat ou un bon de commande</Modal.Title>
+          <Modal.Title>Ajouter un contrat</Modal.Title>
         </Modal.Header>
           <Modal.Body>
               <div className="container-fluid">
@@ -188,7 +188,7 @@ const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
 
                                                                     selected={formData[field.name] || []}
                                                                     options={field.queryset}
-
+                                                                    disabled={field.disabled}
                                                                     />
                                                                 </>
 
@@ -202,8 +202,10 @@ const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
                                                                         required={field.required}
                                                                         className="w-100"
                                                                         value={formData[field.name]}
+                                                                        disabled={field.disabled}
+                                                                        
                                                                         onChange={(e)=>handleSelectChange(e)}>
-
+                                                                        
                                                                         {opt.map((item,index) => (
                                                                             <option key={index} value={String(item.value)}>{item.label}</option>
                                                                         ))}
@@ -219,6 +221,8 @@ const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
                                                                             type="date"
                                                                             value={formData[field.name]||''}
                                                                             onChange={(e)=>handleInputChange(e)}
+                                                                            disabled={field.disabled}
+                                                                        
                                                                         />
                                                                         : field.type === 'IntegerField' || field.type ==='DecimalField'  ?
                                                                             <Form.Control
@@ -228,9 +232,10 @@ const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
                                                                                 type="number"
                                                                                 value={formData[field.name] || 0}
                                                                                 step={0.01}
-
                                                                                 onChange={(e)=>handleInputChange(e)}
-                                                                            />
+                                                                                disabled={field.disabled}
+                                                                        
+                                                                                />
 
                                                                             :
                                                                             <Form.Control
@@ -240,7 +245,8 @@ const AddContrat: React.FC<AddContratProps> = ({refresh}) => {
                                                                                 type="text"
                                                                                 value={formData[field.name]||''}
                                                                                 onChange={(e)=>handleInputChange(e)}
-                                                                            />
+                                                                                disabled={field.disabled}
+                                                                                />
 
 
 

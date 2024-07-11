@@ -6,12 +6,12 @@ interface Obj {
     [key: string]: any;
 }
 export interface EditDataModalState {
-    showEditDQEForm:any;
+    showEditForm:any;
 
 }
 
 const initialState: EditDataModalState = {
-    showEditDQEForm:{
+    showEditForm:{
         id:'',
         shown:false,
         state:[],
@@ -21,6 +21,7 @@ const initialState: EditDataModalState = {
         errorFields: null,
         errorState: null,
     },
+
 };
 
 
@@ -50,12 +51,12 @@ export const EditDataModal = createSlice({
     initialState,
     reducers: {
 
-         showEditDQE: (state,action: PayloadAction<{id:string}>) => {
-             state.showEditDQEForm.id=action.payload.id
-             state.showEditDQEForm.shown=true
+         showEdit: (state,action: PayloadAction<{id:string}>) => {
+             state.showEditForm.id=action.payload.id
+             state.showEditForm.shown=true
         },
-        hideEditDQE: (state) => {
-            state.showEditDQEForm={
+        hideEdit: (state) => {
+            state.showEditForm={
                  id:'',
                 shown:false,
                 state:[],
@@ -72,35 +73,35 @@ export const EditDataModal = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchState.pending, (state) => {
-                state.showEditDQEForm.loadingState = 'pending';
+                state.showEditForm.loadingState = 'pending';
             })
 
             .addCase(fetchFields.pending, (state) => {
-                state.showEditDQEForm.loadingFields = 'pending';
+                state.showEditForm.loadingFields = 'pending';
             })
 
             .addCase(fetchState.fulfilled, (state, action) => {
-                state.showEditDQEForm.loadingState = 'fulfilled';
-                state.showEditDQEForm.state = action.payload;
+                state.showEditForm.loadingState = 'fulfilled';
+                state.showEditForm.state = action.payload;
 
             })
             .addCase(fetchFields.fulfilled, (state, action) => {
-                state.showEditDQEForm.loadingFields = 'fulfilled';
-                state.showEditDQEForm.fields = action.payload;
+                state.showEditForm.loadingFields = 'fulfilled';
+                state.showEditForm.fields = action.payload;
 
             })
             .addCase(fetchState.rejected, (state, action) => {
-                state.showEditDQEForm.loadingState = 'rejected';
-                state.showEditDQEForm.errorState = action.error.message || 'An error occurred';
+                state.showEditForm.loadingState = 'rejected';
+                state.showEditForm.errorState = action.error.message || 'An error occurred';
             })
             .addCase(fetchFields.rejected, (state, action) => {
-                state.showEditDQEForm.loadingFields = 'rejected';
-                state.showEditDQEForm.errorFields = action.error.message || 'An error occurred';
+                state.showEditForm.loadingFields = 'rejected';
+                state.showEditForm.errorFields = action.error.message || 'An error occurred';
             });
 
     },
 });
 
-export const {showEditDQE,hideEditDQE} = EditDataModal.actions;
+export const {showEdit,hideEdit} = EditDataModal.actions;
 
 export default EditDataModal.reducer;
