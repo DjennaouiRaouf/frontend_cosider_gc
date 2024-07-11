@@ -48,6 +48,7 @@ const InfoRenderer: React.FC<any> = (props) => {
           return <span></span>
       }
 
+
     case 'rg':
       if(value)
       {
