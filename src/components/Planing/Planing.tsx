@@ -11,75 +11,27 @@ import numeral from "numeral";
 import {Button,Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
-import { showAddContrat} from "../Slices/AddModalSlices";
-import AddContrat from "../AddContrat/AddContrat";
-import {showSearchContrat} from "../Slices/SearchModalSlices";
-import SearchContrat from "../SearchContrat/SearchContrat";
-import Badge from 'react-bootstrap/Badge';
-import AddAvenant from "../AddAvenant/AddAvenant";
+import {showAddPlaning} from "../Slices/AddModalSlices";
 import {fetchFields, fetchState, showEdit} from "../Slices/EditModalSlices";
-
+import {useParams} from "react-router-dom";
+import AddPlaning from "../AddPlaning/AddPlaning";
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
   
   const dispatch=useDispatch();
-  const addAvenant = () =>{
-    let id=encodeURIComponent(props.data.id)
-    
-    dispatch(fetchFields(`/forms/contrataddupdateform/?id=${id}`))
-    dispatch(fetchState(`/forms/contrataddupdateform/?id=${id}`))
-    dispatch(showEdit({id:props.data.id}))
-  }
-
+  
   switch (props.column.colId) {
-
-    case 'montant_ht' :
-      return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
-    case 'montant_ttc' :
-      return <span>{numeral(value).format('0,0.00').replaceAll(',',' ').replace('.',',')+' DA'}</span>
-    case 'avenant':
-      if(value || value === 0)
-      {
-          return <button className="btn btn-primary btn-sm" onClick={addAvenant} data-bs-toggle="tooltip" data-bs-placement="bottom"  title={"Ajouter Avenant N° "+(value+1)} style={{background: "#df162c", borderWidth: 0}} type="button">
-          {value}
-        </button> 
-          
-      }else{
-          return <span></span>
-      }
-
-
-    case 'rg':
-      if(value)
-      {
-        return <span>{value+" %"}</span>
-      }else{
-        return <span></span>
-      }
-    case 'tva':
-      if(value)
-        {
-          return <span>{value+" %"}</span>
-        }else{
-          return <span></span>
-        }
-    case 'rabais':
-      if(value)
-        {
-          return <span>{value+" %"}</span>
-        }else{
-          return <span></span>
-        }
     default:
       return <span>{value}</span>
   }
 
 };
 
-const Contrat: React.FC<any> = () => {
+const Planing: React.FC<any> = () => {
   const[fields,setFields]=useState<any[]>([]);
   const[data,setData]=useState<any[]>([]);
   const [searchParams] = useSearchParams();
+  const { cid,av } = useParams();
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
     const gridRef = useRef(null);
 
@@ -122,7 +74,9 @@ const Contrat: React.FC<any> = () => {
 
 
     const getData = async(url:string) => {
-       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getcontract/${url}`,{
+      const idav :string=encodeURIComponent(String(av));
+      const idc :string=encodeURIComponent(String(cid));
+       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getplaning/?contrat__numero=${idc}&contrat__avenant=${idav}${url}`,{
       headers: {
         //Authorization: `Token ${Cookies.get('token')}`,
         'Content-Type': 'application/json',
@@ -146,7 +100,7 @@ const Contrat: React.FC<any> = () => {
 
 
   const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/contratlistform/`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/planinglistform/`,{
             headers: {
                 'Content-Type': 'application/json',
 
@@ -192,19 +146,16 @@ const Contrat: React.FC<any> = () => {
 
     const dispatch=useDispatch();
     const addC = () => {
-      dispatch(showAddContrat())
+      dispatch(showAddPlaning());
     }
       const searchC = () => {
-      dispatch(showSearchContrat())
+      
     }
 
   return (
       <>
           <>
-            <AddContrat refresh={()=>{getData('')}}/>
-            <AddAvenant refresh={()=>{getData('')}}/>
-            
-            <SearchContrat/>
+            <AddPlaning refresh={()=>getData('')}/>         
           </>
           <div id="wrapper">
               <div id="content-wrapper" className="d-flex flex-column">
@@ -212,7 +163,7 @@ const Contrat: React.FC<any> = () => {
                       <div className="container-fluid">
                           <div className="card shadow">
                               <div className="card-header py-3">
-                                  <p className="text-primary m-0 fw-bold">Nos Contrats</p>
+                                  <p className="text-primary m-0 fw-bold">Nos Planings</p>
                               </div>
                               <div className="card-body">
 
@@ -222,7 +173,7 @@ const Contrat: React.FC<any> = () => {
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={addC}>
                                                   <i className="fas fa-plus" style={{marginRight: 5}}/>
-                                                  Nouveau Contrat
+                                                  Nouveau Planing
                                               </button>
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={searchC}>
@@ -275,4 +226,4 @@ domLayout='autoHeight'
   );
 };
 
-export default Contrat;
+export default Planing;

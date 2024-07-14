@@ -17,7 +17,9 @@ import Invoice from "../../Invoice/Invoice";
 import Avances from "../../Avances/Avances";
 import AvancesParams from "../../Avances/AvancesParams";
 import DQECumuleParams from "../../DQE/DQECumuleParams";
-
+import DQECumule from "../../DQE/DQECumule";
+import PlaningParams from "../../Planing/PlaningParams";
+import Planing from "../../Planing/Planing";
 const Routes: React.FC<any> = () => {
 
     const {authenticated} = useContext(AuthContext);
@@ -59,6 +61,37 @@ const Routes: React.FC<any> = () => {
                   authenticated ? (
                       <>
                           <DQEParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+           <Route
+              path="/planing"
+              element={
+                  authenticated ? (
+                      <>
+                          <PlaningParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+          <Route
+              path="/planing/liste_planing/:cid/:av"
+              element={
+                  authenticated ? (
+                      <>
+                            <NavigationBar/>
+                          <Planing/>
 
 
 
@@ -191,7 +224,7 @@ const Routes: React.FC<any> = () => {
                   authenticated ? (
                       <>
                           <NavigationBar/>
-                          <DQE/>
+                          <DQECumule/>
 
 
 

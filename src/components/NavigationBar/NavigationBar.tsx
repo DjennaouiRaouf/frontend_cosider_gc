@@ -85,6 +85,7 @@ const NavigationBar: React.FC<any> = () => {
                             <NavDropdown.Item href="/dqe_cumule">DQE cumulé</NavDropdown.Item>
                         </NavDropdown>
 
+                        <Nav.Link href="/planing">Planing</Nav.Link>
                         <Nav.Link href="/bl">Bons de livraison</Nav.Link>
                         <Nav.Link href="/invoice">factures</Nav.Link>
                         <Nav.Link href="/camions">Camions</Nav.Link>

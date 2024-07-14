@@ -8,21 +8,21 @@ export interface AddDataModalState {
     showAddContratForm:boolean;
     showAddClientForm:boolean;
     showAddDQEForm:boolean;
+    showAddPlaningForm:boolean;
     showAddBLForm:boolean;
     showAddCamionForm:boolean;
     showAddFactureForm:boolean;
     showAddAvanceForm:boolean;
-    showAddAvenantForm:any;
 }
 
 const initialState: AddDataModalState = {
     showAddContratForm:false,
-    showAddAvenantForm:{
-        flag:false,
-        id:null
-    },
+   
+    
     showAddClientForm:false,
     showAddDQEForm:false,
+    showAddPlaningForm:false,
+    
     showAddBLForm:false,
     showAddCamionForm:false,
     showAddFactureForm:false,
@@ -43,22 +43,6 @@ export const AddDataModal = createSlice({
             state.showAddContratForm=false
         },
 
-        showAddAvenant: (state,action: PayloadAction<any>) => {
-            console.log(action.payload);
-            state.showAddAvenantForm={
-                flag:true,
-                id:action.payload
-            }
-            
-        },
-        hideAddAvenant: (state) => {
-            state.showAddAvenantForm={
-                flag:true,
-                id:null
-            }
-        },
-
-
 
            showAddClient: (state) => {
 
@@ -76,6 +60,15 @@ export const AddDataModal = createSlice({
         },
         hideAddDQE: (state) => {
             state.showAddDQEForm=false
+        },
+
+        showAddPlaning: (state) => {
+        
+            state.showAddPlaningForm=true
+
+        },
+        hideAddPlaning: (state) => {
+            state.showAddPlaningForm=false
         },
 
 
@@ -129,7 +122,7 @@ showAddClient,hideAddClient,
 showAddDQE,hideAddDQE,
 showAddBL,hideAddBL,
 showAddCamion,hideAddCamion,
-showAddAvenant,hideAddAvenant,
+showAddPlaning,hideAddPlaning,
 showAddFacture,hideAddFacture} = AddDataModal.actions;
 
 export default AddDataModal.reducer;
