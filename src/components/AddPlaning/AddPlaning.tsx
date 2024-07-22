@@ -8,6 +8,7 @@ import {hideAddPlaning} from "../Slices/AddModalSlices";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {Transform} from "../Utils/Utils";
+import { useParams } from "react-router-dom";
 
 type AddPlaningProps = {
   refresh:()=>void,
@@ -16,7 +17,7 @@ type AddPlaningProps = {
 const AddPlaning: React.FC<AddPlaningProps> = ({refresh}) => {
      const [validated, setValidated] = useState(false);
     const { showAddPlaningForm} = useSelector((state: RootState) => state.addDataModalReducer);
-
+    const {cid}=useParams();
     const dispatch = useDispatch();
     const [fields,setFields]=useState<any[]>([]);
     const [defaultState,setDefaultState]=useState<any>({});
@@ -48,7 +49,8 @@ const AddPlaning: React.FC<AddPlaningProps> = ({refresh}) => {
 
 
     const getFields = async() => {
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/planingaddupdateform/`,{
+        const idc:string=encodeURIComponent(String(cid))
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/planingaddupdateform/?contrat=${idc}`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -73,12 +75,12 @@ const AddPlaning: React.FC<AddPlaningProps> = ({refresh}) => {
         e.preventDefault();
         const form = e.currentTarget;
         console.log(formData)
-
+        formData['contrat']=cid
 
         if (form.checkValidity()) {
             setValidated(false)
 
-            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addcontract/`,Transform(formData),{
+            await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/addplaning/`,Transform(formData),{
                 headers: {
                     Authorization: `Token ${Cookies.get("token")}`,
                     'Content-Type': 'application/json',
@@ -177,7 +179,7 @@ const AddPlaning: React.FC<AddPlaningProps> = ({refresh}) => {
                                               </strong>
                                           </label>
  {
-                                                            field.type === "PrimaryKeyRelatedField"?
+                                                            field.type === "ForeignKey"?
                                                                 <>
                                                                     <Typeahead
 

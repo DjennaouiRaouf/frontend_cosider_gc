@@ -8,6 +8,11 @@ import "ag-grid-enterprise";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import numeral from "numeral";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 import {Button,Form, Modal} from "react-bootstrap";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {useDispatch} from "react-redux";
@@ -15,6 +20,8 @@ import {showAddPlaning} from "../Slices/AddModalSlices";
 import {fetchFields, fetchState, showEdit} from "../Slices/EditModalSlices";
 import {useParams} from "react-router-dom";
 import AddPlaning from "../AddPlaning/AddPlaning";
+import Cookies from "js-cookie";
+import DQECumule from "../DQE/DQECumule";
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
   
@@ -73,10 +80,10 @@ const Planing: React.FC<any> = () => {
   };
 
 
+
     const getData = async(url:string) => {
-      const idav :string=encodeURIComponent(String(av));
       const idc :string=encodeURIComponent(String(cid));
-       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getplaning/?contrat__numero=${idc}&contrat__avenant=${idav}${url}`,{
+       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getplaning/?contrat=${idc}`,{
       headers: {
         //Authorization: `Token ${Cookies.get('token')}`,
         'Content-Type': 'application/json',
@@ -152,8 +159,106 @@ const Planing: React.FC<any> = () => {
       
     }
 
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    
+    const handleFileChange = async(event: React.ChangeEvent<HTMLInputElement>) => {
+
+      const file = event.target.files?.[0];
+        const formData = new FormData();
+        if (file) {
+          formData.append('file', file);
+          formData.append('contrat',String(cid));
+        }
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api_gc/importplaning/`, formData, {
+          headers: {
+            Authorization: `Token ${Cookies.get("token")}`,
+            'Content-Type': 'multipart/form-data',
+          },
+
+        })
+            .then((response: any) => {
+              
+              if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+              }
+                 const paramsArray = Array.from(searchParams.entries());
+                const queryString = paramsArray.reduce((acc, [key, value], index) => {
+                  if (index === 0) {
+                    return `?${key}=${encodeURIComponent(value)}`;
+                  } else {
+                    return `${acc}&${key}=${encodeURIComponent(value)}`;
+                  }
+                }, '');
+
+                getData(queryString);
+
+            })
+            .catch((error: any) => {
+                console.log(error)
+             
+              if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+              }
+
+            });
+    }
+    
+    const handleAddMulitplePl = () => {
+
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+
+};
+
+
+
+
+
+    const handleTemplate = async () => {
+       const contrat_id:string=encodeURIComponent(String(cid));
+      try {
+        // Make a GET request to the Django endpoint
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api_gc/dqecumuleplaning/?contrat_id=${contrat_id}`); // Adjust URL as necessary
+  
+        // Check if request was successful
+        if (!response.ok) {
+          throw new Error('Failed to download file');
+        }
+  
+        // Convert blob response to Blob object
+        const blob = await response.blob();
+  
+        // Create download link
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'exported_data.xlsx');
+        document.body.appendChild(link);
+        
+        // Trigger download
+        link.click();
+  
+        // Clean up
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error('Error downloading file:', error);
+      }
+    }
+
+
   return (
       <>
+          <>
+              <input
+                  type="file"
+                  accept=".xlsx"
+                  onChange={handleFileChange}
+                  hidden={true}
+                  style={{display: 'none'}}
+                  ref={(input) => (fileInputRef.current = input)}
+              />
+          </>
           <>
             <AddPlaning refresh={()=>getData('')}/>         
           </>
@@ -180,6 +285,33 @@ const Planing: React.FC<any> = () => {
                                                   <i className="fas fa-search" style={{marginRight: 5}}/>
                                                   Rechercher
                                               </button>
+
+                                              <div className="dropdown">
+  <button
+    className="btn btn-primary dropdown-toggle"
+    aria-expanded="false"
+    data-bs-toggle="dropdown"
+    type="button"
+    style={{ background: "#df162c", borderWidth: 0, borderTopLeftRadius:0,borderBottomLeftRadius:0 }}
+  >
+    <i className="fas fa-arrow-right" />
+    &nbsp;Transfer
+  </button>
+  <div className="dropdown-menu" style={{cursor: 'pointer'}}>
+  <a className="dropdown-item" onClick={handleTemplate} >
+                                                        <i className="fas fa-download" style={{marginRight: 5}}/>Format du Planing  (.xlsx)
+                                                      </a>
+                                              
+  <a className="dropdown-item" onClick={handleAddMulitplePl } >
+                                                        <i className="fas fa-upload" style={{marginRight: 5}}/>Chargement (.xlsx)
+                                                      </a>
+                                              
+
+  </div>
+</div>
+
+        
+
 
                                           </div>
                                       </div>

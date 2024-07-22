@@ -14,10 +14,9 @@ import {showAddBL} from "../Slices/AddModalSlices";
 import AddBL from "../AddBL/AddBL";
 import AlertMessage from "../AlertMessage/AlertMessage";
 import {formatDate, Humanize} from "../Utils/Utils";
-import PrintBL from "../ActionRenderer/PrintBL/PrintBL";
 import SearchBL from "../SearchBL/SearchBL";
 import {showSearchBL} from "../Slices/SearchModalSlices";
-import DelBL from "../ActionRenderer/DelBL/DelBL";
+import BLOption from "../ActionRenderer/BLOption/BLOption";
 
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
@@ -119,14 +118,10 @@ const BonLivraison: React.FC<any> = () => {
             .then((response:any) => {
 
                     const updatedCols:any[] = [...response.data.fields,
-                     {
-                        headerName:' ',
-                        cellRenderer:PrintBL,
-                             minWidth: 250
-                     },
+                     
                         {
                              headerName:' ',
-                            cellRenderer:DelBL,
+                            cellRenderer:BLOption,
                              minWidth: 50,
                               cellRendererParams:{
                                 refresh:getData,
@@ -266,11 +261,14 @@ const BonLivraison: React.FC<any> = () => {
                                       </div>
                                   </div>
                                   <div
-                                      className="ag-theme-alpine mt-4"
-                                      style={{ height: 500,width:"100%" }}
+                                        className="ag-theme-alpine mt-4"
+                                                                                             style={{overflowY:"hidden",width:"100%" ,position: 'relative', zIndex: 1 }}
 
                                   >
                                     <AgGridReact ref={gridRef}
+                                
+                                    domLayout='autoHeight'
+                                    suppressContextMenu={true}
                                            rowData={data} columnDefs={fields}
                                            gridOptions={gridOptions}
                                            onRowClicked={handleRowClick}

@@ -55,7 +55,7 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
 
     const getFields = async() => {
          const contrat_id:string=encodeURIComponent(String(cid));
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/bladdform/?contrat=${contrat_id}`,{
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/forms/bladdupdateform/?contrat=${contrat_id}`,{
 
             headers: {
                 Authorization: `Token ${Cookies.get("token")}`,
@@ -97,7 +97,7 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
                 .then((response:any) => {
                     refresh();
                     setFormData(defaultState);
-                    handleClose();
+                    getFields()
                     dispatch(displayAlertMessage({variant:Variant.SUCCESS,message:'Bon de livraison ajouté'}))
 
                 })
@@ -118,16 +118,13 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
 
     }
     useEffect(() => {
-
         getFields();
-
-
-
     },[]);
+
+
     const handleClose = () => {
-
         dispatch(hideAddBL())
-
+       
     }
     const handleChange = (ref:any, op:any) => {
         if(op.length > 0 ){
@@ -186,7 +183,7 @@ const AddBL: React.FC<AddBLProps> = ({refresh}) => {
                                                       </strong>
                                                   </label>
                                                   {
-                                                      field.type === "PrimaryKeyRelatedField" ?
+                                                      field.type === "ForeignKey" ?
                                                           <>
                                                               <Typeahead
                                                                   multiple={false}

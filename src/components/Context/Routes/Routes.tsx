@@ -86,7 +86,7 @@ const Routes: React.FC<any> = () => {
               }
           />
           <Route
-              path="/planing/liste_planing/:cid/:av"
+              path="/planing/liste_planing/:cid"
               element={
                   authenticated ? (
                       <>
