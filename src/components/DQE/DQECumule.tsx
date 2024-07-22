@@ -14,6 +14,7 @@ import {useDispatch} from "react-redux";
 import {Humanize} from "../Utils/Utils";
 
 
+
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
 
