@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState ,useRef} from "react";
 import {useDispatch} from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -13,6 +13,7 @@ type BLOptionProps = {
 const BLOption: React.FC<BLOptionProps> = (props) => {
     const dispatch=useDispatch();
     const [searchParams] = useSearchParams();
+    const iframeRef = useRef(null);
     const Delete = async() => {
        const rowData:any =  props.data;
        if(rowData){
@@ -57,20 +58,13 @@ const BLOption: React.FC<BLOptionProps> = (props) => {
 
         })
         .then(response => {
-          const url = URL.createObjectURL(response.data);
-          const newWindow = window.open(url, '_blank');
-          if (newWindow) {
-            newWindow.onload = () => {
-              newWindow.print();
-              URL.revokeObjectURL(url); // Clean up
-            };
-          }
+          window.open(URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
         })
         .catch(error => {
         });
       }
 
-    
+        
 
     }
 
@@ -105,8 +99,6 @@ const BLOption: React.FC<BLOptionProps> = (props) => {
     </svg>
   </div>
 </div>
-
-
 
   </>);
 };

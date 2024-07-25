@@ -133,22 +133,7 @@ const Invoice: React.FC<any> = () => {
                               cellRendererParams:{
                                 refresh:getData,
                               }
-                        },
-                         {
-                            headerName:'',
-                            cellRenderer:DetailInvoice,
-                            width: 20,
-                              cellRendererParams:{
-                                refresh:getData,
-                              }
-                        },
-                        {
-                            headerName:'',
-                            cellRenderer:Encaissement,
-                            width: 20,
-
                         }
-
                      ,...response.data.fields,
 
                     ];
