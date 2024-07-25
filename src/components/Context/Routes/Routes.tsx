@@ -20,6 +20,7 @@ import DQECumuleParams from "../../DQE/DQECumuleParams";
 import DQECumule from "../../DQE/DQECumule";
 import PlaningParams from "../../Planing/PlaningParams";
 import Planing from "../../Planing/Planing";
+import InvoicePrinter from "../../ActionRenderer/DelInvoice/InvoicePrinter/InvoicePrinter";
 const Routes: React.FC<any> = () => {
 
     const {authenticated} = useContext(AuthContext);
@@ -101,13 +102,14 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
+            
               <Route
               path="/dqe_cumule"
               element={
                   authenticated ? (
                       <>
                           <DQECumuleParams/>
-
+                            
 
 
                       </>
@@ -284,6 +286,24 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
+          
+          <Route
+              path="/invoice/liste_f/:cid/p_facture/:fid"
+              element={
+                  authenticated ? (
+                      <>
+                        <NavigationBar/>
+                        <InvoicePrinter/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+          
               <Route
               path="/signup"
               element={

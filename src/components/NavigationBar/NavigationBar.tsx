@@ -8,6 +8,7 @@ import {PermissionContext} from "../Context/PermissionContext/PermissionContext"
 import Avatar from 'react-avatar';
 import logo from '../../images/logo.png';
 import Cookies from 'js-cookie';
+
 type NavigationBarProps = {
   //
 };
@@ -66,7 +67,18 @@ const NavigationBar: React.FC<any> = () => {
     const { permission } = useContext(PermissionContext);
   return (
       <>
-         <Navbar expand="lg" className="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
+      
+        <style>
+              {`
+             @media print {
+                .element-to-hide {
+                display: none !important;
+                }
+            }
+          `}
+        </style>
+
+         <Navbar expand="lg" className="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light element-to-hide ">
             <div className={'container-fluid'} style={{border:"none"}}>
                 <Navbar.Brand>
               <span>
