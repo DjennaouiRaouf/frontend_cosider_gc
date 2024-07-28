@@ -230,6 +230,10 @@ const InvoicePrinter: React.FC<InvoicePrinterProps> = (props) => {
       <table className="table table-sm">
         <thead>
           <tr>
+          <th>
+              <br />
+              <strong>N°.BL</strong>
+            </th>
             <th>
               <br />
               <strong>Réf.Produit</strong>
@@ -247,6 +251,7 @@ const InvoicePrinter: React.FC<InvoicePrinterProps> = (props) => {
         <tbody>
         {facture?.details?.map((item:any, index:any) => (
             <tr key={index}>
+            <td>{item.bl}</td>
             <td>{item.ref_prod}</td>
             <td>{item.libelle}</td>
             <td>{item.UM}</td>

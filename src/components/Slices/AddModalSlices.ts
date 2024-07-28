@@ -13,6 +13,7 @@ export interface AddDataModalState {
     showAddCamionForm:boolean;
     showAddFactureForm:boolean;
     showAddAvanceForm:boolean;
+    showAddEncForm:any;
 }
 
 const initialState: AddDataModalState = {
@@ -27,6 +28,10 @@ const initialState: AddDataModalState = {
     showAddCamionForm:false,
     showAddFactureForm:false,
     showAddAvanceForm:false,
+    showAddEncForm:{
+        id:null,
+        shown:false,
+    },
 
 };
 
@@ -71,6 +76,20 @@ export const AddDataModal = createSlice({
             state.showAddPlaningForm=false
         },
 
+        showAddEnc: (state,action) => {
+        
+            state.showAddEncForm={
+                id:action.payload,
+                shown:true
+            }
+
+        },
+        hideAddEnc: (state) => {
+            state.showAddEncForm={
+                id:null,
+                shown:false
+            }
+        },
 
 
          showAddAvance: (state) => {
@@ -123,6 +142,7 @@ showAddDQE,hideAddDQE,
 showAddBL,hideAddBL,
 showAddCamion,hideAddCamion,
 showAddPlaning,hideAddPlaning,
-showAddFacture,hideAddFacture} = AddDataModal.actions;
+showAddFacture,hideAddFacture,
+showAddEnc,hideAddEnc} = AddDataModal.actions;
 
 export default AddDataModal.reducer;

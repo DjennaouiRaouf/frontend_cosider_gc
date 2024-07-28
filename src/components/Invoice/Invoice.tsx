@@ -20,7 +20,7 @@ import AlertMessage from "../AlertMessage/AlertMessage";
 import DelInvoice from "../ActionRenderer/DelInvoice/DelInvoice";
 import DetailFacture from "../DetailFacture/DetailFacture"
 import Encaissement from "../ActionRenderer/Encaissement/Encaissement";
-
+import AddEnc from "../AddEnc/AddEnc";
 const InfoRenderer: React.FC<any> = (props) => {
   const { value } = props;
 
@@ -187,6 +187,7 @@ const Invoice: React.FC<any> = () => {
 
   return (
       <>
+          <AddEnc/>
           <AlertMessage/>
           <AddFacture refresh={()=>{getData('')}}/>
             <DetailFacture/>

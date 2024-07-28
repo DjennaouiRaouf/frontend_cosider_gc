@@ -246,6 +246,10 @@ const Planing: React.FC<any> = () => {
       }
     }
 
+    const deletePlaning = () =>{
+        
+    }
+
 
   return (
       <>
@@ -285,6 +289,12 @@ const Planing: React.FC<any> = () => {
                                                   <i className="fas fa-search" style={{marginRight: 5}}/>
                                                   Rechercher
                                               </button>
+                                              <button className="btn btn-primary" type="button"
+                                                      style={{background: "#df162c", borderWidth: 0}} onClick={deletePlaning}>
+                                                  <i className="fas fa-search" style={{marginRight: 5}}/>
+                                                  Supprimer
+                                              </button>
+
 
                                               <div className="dropdown">
   <button
