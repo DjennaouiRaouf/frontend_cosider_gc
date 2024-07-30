@@ -31,7 +31,6 @@ const InfoRenderer: React.FC<any> = (props) => {
 
 };
 
-
 const DQECumule: React.FC<any> = () => {
   const[fields,setFields]=useState<any[]>([]);
   const[data,setData]=useState<any[]>([]);
