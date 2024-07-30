@@ -291,7 +291,7 @@ const Planing: React.FC<any> = () => {
                                               </button>
                                               <button className="btn btn-primary" type="button"
                                                       style={{background: "#df162c", borderWidth: 0}} onClick={deletePlaning}>
-                                                  <i className="fas fa-search" style={{marginRight: 5}}/>
+                                                  <i className="fas fa-trash" style={{marginRight: 5}}/>
                                                   Supprimer
                                               </button>
 

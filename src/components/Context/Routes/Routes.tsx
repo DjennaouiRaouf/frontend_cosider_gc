@@ -21,6 +21,10 @@ import DQECumule from "../../DQE/DQECumule";
 import PlaningParams from "../../Planing/PlaningParams";
 import Planing from "../../Planing/Planing";
 import InvoicePrinter from "../../ActionRenderer/DelInvoice/InvoicePrinter/InvoicePrinter";
+import Encaissements from "../../Encaissements/Encaissements";
+import EncParams from "../../Encaissements/EncParams";
+import FCPrinter from "../../FCPrinter/FCPrinter";
+import FCParams from "../../FCPrinter/FCParams";
 const Routes: React.FC<any> = () => {
 
     const {authenticated} = useContext(AuthContext);
@@ -140,6 +144,71 @@ const Routes: React.FC<any> = () => {
                   authenticated ? (
                       <>
                           <BLParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+ <Route
+              path="/enc"
+              element={
+                  authenticated ? (
+                      <>
+                          <EncParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+<Route
+              path="/enc/liste_enc/:cid"
+              element={
+                  authenticated ? (
+                      <>
+                          <NavigationBar/>
+                          <Encaissements/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+<Route
+              path="fc/"
+              element={
+                  authenticated ? (
+                      <>
+                        <FCParams/>
+
+
+
+                      </>
+                  ) : (
+                      <Navigate to="/"  />
+                  )
+              }
+          />
+
+<Route
+              path="fc/:cid/:du/:au"
+              element={
+                  authenticated ? (
+                      <>
+                        <NavigationBar/>
+                        <FCPrinter/>
 
 
 
@@ -303,6 +372,7 @@ const Routes: React.FC<any> = () => {
                   )
               }
           />
+
           
               <Route
               path="/signup"
