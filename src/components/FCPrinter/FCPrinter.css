@@ -1,0 +1,13 @@
+.print-only {
+    display: none;
+}
+
+@media print {
+    @page {
+        size: A4 portrait;
+      
+    }
+    .print-only {
+        display: block;
+    }
+}
