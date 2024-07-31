@@ -17,7 +17,6 @@ import contrat from "../Contrat/Contrat";
 const InvoiceParams: React.FC<any> = () => {
     const [display, setDisplay] = useState(true);
     const [selectedContrat, setSelectedContrat] = useState<string[]>([]);
-    const [avenant,setAvenant]=useState<string[]>([]);
     const [contrat,setContrat]=useState<string[]>([]);
 
     const navigate=useNavigate();
@@ -26,7 +25,7 @@ const InvoiceParams: React.FC<any> = () => {
   const valider = () => {
     hide();
     const val:string=selectedContrat[0]
-    navigate(`liste_f/${encodeURIComponent(val)}(${avenant})`, )
+    navigate(`liste_f/${encodeURIComponent(val)}`, )
 
   }
 
@@ -49,33 +48,12 @@ const InvoiceParams: React.FC<any> = () => {
 
   }
 
-  const getAvenant = async(c:string) => {
-    await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/last_avenant/?num=${encodeURIComponent(c)}`,{
-         headers: {
-             'Content-Type': 'application/json',
-
-         },
-     })
-         .then((response:any) => {
-            setAvenant(response.data)
-
-
-
-
-         })
-         .catch((error:any) => {
-            setAvenant([])
-         });
-
-
-}
-
+ 
 
  
     const handleChange2 = (selected:any) => {
     setSelectedContrat(selected);
-    getAvenant(selected[0])
-
+ 
 
   };
 
@@ -113,22 +91,7 @@ const InvoiceParams: React.FC<any> = () => {
                       />
                   </>
               </div>
-              <div className="mb-3">
-                  <label className="form-label" htmlFor="username">
-                      <strong>
-                          N° d'avenant
-                      </strong>
-                  </label>
-                  <>
-                        <Form.Control
-                            type="text"
-                            id="avenant"
-                            disabled={true}
-                            value={avenant}
-                        />
-                    </>
-              </div>
-
+ 
           </Modal.Body>
           <Modal.Footer>
               <Button variant="secondary" style={{background: "#df162c", borderWidth: 0}} onClick={valider}>

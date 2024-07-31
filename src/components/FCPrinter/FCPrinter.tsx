@@ -13,11 +13,17 @@ interface FCPrinterProps {
 const FCPrinter: React.FC<FCPrinterProps> = (props) => {
 
     const componentRef:any= useRef();
-    const [facture,setFacture]=useState<any>({});
-    const { fid } = useParams();
+    
+    const [facture,setFacture]=useState<any[]>([]);
+    const [extra,setExtra]=useState<any>({});
+
+    const { cid,du,au } = useParams();
     const getData = async()=>{
-        const id_inv:string=encodeURIComponent(String(fid));
-        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/print_f/?id=${id_inv}`, {
+        const c:string=encodeURIComponent(String(cid));
+        const d:string=encodeURIComponent(String(du));
+        const a:string=encodeURIComponent(String(au));
+
+        await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/printenc/?contrat__numero=${c}&date_op_after=${du}&date_op_before=${au}`, {
             headers: {
                Authorization: `Token ${Cookies.get("token")}`,
                'Content-Type': 'application/json',
@@ -25,8 +31,8 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
            
          })
          .then(response => {
-            setFacture(response.data)
-         
+            setFacture(response.data.fc)
+            setExtra(response.data.extra)
          
          })
          .catch(error => {
@@ -127,7 +133,7 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
               INDICE DE REVISION :&nbsp;
             </h6>
             <h6 className="text-center" style={{ fontSize: 12 }}>
-              {facture.rev}
+              {extra.rev}
             </h6>
           </div>
         </div>
@@ -137,7 +143,7 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
         >
           <div className="col" style={{ paddingTop: 20 }}>
             <h6 className="text-center" style={{ fontSize: 12 }}>
-              Réf :&nbsp; &nbsp;{facture.ref}
+              Réf :&nbsp; &nbsp;{extra.ref}
             </h6>
           </div>
         </div>
@@ -168,98 +174,96 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
     >
       <div
         className="col-auto col-sm-4 d-lg-flex justify-content-lg-center"
-        style={{ width: "50%", borderRightWidth: 0, borderRightStyle: "solid" }}
+        style={{ width: "100%", borderRightWidth: 0, borderRightStyle: "solid" }}
       >
         <div className="text-start" style={{ width: "100%" }}>
           <label className="form-label">Unité :&nbsp;</label>
           <label className="form-label" style={{ width: "89%" }}>
-            {facture.unite}
+            {extra.unite}
           </label>
           <label className="form-label" style={{ marginTop: 0 }}>
-            Capital Social :&nbsp;{facture.cap}
-          </label>
-          <br/>
-          <label className="form-label" style={{ marginTop: 0 }}>
-            N° RC :&nbsp; {facture.rc || '/'}
+            Code Client :&nbsp;{extra.code_client}
           </label>
           <br/>
           <label className="form-label" style={{ marginTop: 0 }}>
-            N° IF :&nbsp;{facture.nif || '/'}
+            Raison Sociale :&nbsp; { extra.rs}
+          </label>
+          <br/>
+          <label className="form-label" style={{ marginTop: 0 }}>
+            Adresse :&nbsp; { extra.adresse}
+          </label>
+          <br/>
+          <label className="form-label" style={{ marginTop: 0 }}>
+            N° IF :&nbsp;{ extra.nif}
           </label>
           <br/>
           <label className="form-label" style={{ width:'100%', marginTop: 0 }}>
-            AI :&nbsp; {facture.cai || '/'}
-          </label>
-          <br/>
-          <label className="form-label" style={{ marginTop: 0 }}>
-            N° Convention :&nbsp; {facture.contrat}
+            N° RC :&nbsp; { extra.nrc}
           </label>
           <br/>
           
         </div>
       </div>
-      <div
-        className="col-auto col-sm-4 d-lg-flex justify-content-lg-center"
-        style={{ width: "50%", borderRightWidth: 0, borderRightStyle: "solid" }}
-      >
-        <div className="text-start" style={{ width: "100%" }}>
-          <label className="form-label">Date Facture :&nbsp;</label>
-          <label className="form-label" style={{ width: "78%" }}>
-            {facture.date}
-          </label>
-          <br/>
-          <label className="form-label" style={{ marginTop: 0 }}>
-            Client :&nbsp; {facture.client}
-          </label>
-          <br/>
-          <label className="form-label" style={{ marginTop: 0 }}>
-            N° RC :&nbsp; {facture.n_rc|| '/'}
-          </label>
-          <br/>
-          <label className="form-label" style={{ marginTop: 0 }}>
-            N° IF :&nbsp; {facture.n_if|| '/'}
-          </label>
-          <br/>
-          <label className="form-label" style={{ marginTop: 0 }}>
-            AI :&nbsp; {facture.ai || '/'}
-          </label>
-        </div>
-      </div>
+      
     </div>
     <div style={{ margin:5, overflow: "hidden" }}>
-      <table className="table table-sm">
+    
+      <table className="table table-sm table-bordered">
         <thead>
           <tr>
           <th>
-              <br />
-              <strong>N°.BL</strong>
+              <strong>N°.Facture</strong>
             </th>
             <th>
-              <br />
-              <strong>Réf.Produit</strong>
+              <strong>Date Op</strong>
             </th>
             <th>
-              <br />
-              <strong>Libellé</strong>
+              <strong>Facturation</strong>
             </th>
-            <th>UM</th>
-            <th>QTE</th>
-            <th>PU . HT</th>
-            <th>T. Ligne HT</th>
+            <th><strong>Encaissement</strong></th>
+            <th><strong>Creances</strong></th>
           </tr>
         </thead>
         <tbody>
-        {facture?.details?.map((item:any, index:any) => (
-            <tr key={index}>
-            <td>{item.bl}</td>
-            <td>{item.ref_prod}</td>
-            <td>{item.libelle}</td>
-            <td>{item.UM}</td>
-            <td>{item.qte}</td>
-            <td>{Humanize(item.pu_ht)}</td>
+        {facture?.map((item:any, index:any) => (
+          <tr key={index}>
+            <td>{item.id.split('_')[1]}</td>
+            <td>{item.date}</td>
+            <td>{Humanize(item.montant_facture_ttc)}</td>
             
-            <td>{Humanize(item.t_ligne_ht)}</td>
-            </tr>
+            { item.enc.length > 0 ?
+                <td>
+                  <table>
+                    <tbody>
+                    {item.enc?.map((item2:any, index2:any) => (
+                      <tr key={index2}>
+                      <td>{Humanize(item2.montant_encaisse)}</td>
+                    </tr>
+                    ))}
+                    </tbody>
+                  </table>
+                </td>:
+                <td>{Humanize(0)}</td>
+            }
+            
+            { item.enc.length > 0 ?
+                <td>
+                <table>
+                  <tbody>
+                  {item.enc?.map((item3:any, index3:any) => (
+                    <tr key={index3}>
+                    <td>{Humanize(item3.montant_creance)}</td>
+                  </tr>
+                  ))}
+                  </tbody>
+                </table>
+                </td>:
+                <td>{Humanize(item.montant_facture_ttc)}</td>
+            }    
+          
+          </tr>
+
+             
         ))}
           
         </tbody>
@@ -282,49 +286,26 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
         <div className="row" style={{ height: 26 }}>
           <div className="col">
             <label className="col-form-label">
-              <strong>TVA :&nbsp;&nbsp;{facture.tva}</strong>
+              <strong>Total Facturé :&nbsp;&nbsp;{Humanize(extra.tf)} DA &nbsp;</strong>
             </label>
           </div>
         </div>
         <div className="row" style={{ height: 26 }}>
           <div className="col">
             <label className="col-form-label">
-              <strong>Rabais :&nbsp;&nbsp;{facture.rabais}</strong>
+              <strong>Total Encaissé :&nbsp;&nbsp;{Humanize(extra.te)} DA &nbsp;</strong>
             </label>
           </div>
         </div>
         <div className="row" style={{ height: 26 }}>
           <div className="col">
             <label className="col-form-label">
-              <strong>RG :&nbsp;&nbsp;{facture.rg}</strong>
+              <strong>Solde :&nbsp;&nbsp;{Humanize(extra.solde)} DA &nbsp;</strong>
             </label>
           </div>
         </div>
-        <div className="row" style={{ height: 26 }}>
-          <div className="col">
-            <label className="col-form-label">
-              <strong>Montant RG :&nbsp;{facture.mrg}</strong>
-            </label>
-          </div>
-        </div>
+
        
-       
-        <div className="row" style={{ height: 26 }}>
-          <div className="col">
-            <label className="col-form-label">
-              <strong>Montant en HT :&nbsp;{facture.mht}</strong>
-            </label>
-          </div>
-        </div>
-       
-       
-        <div className="row" style={{ height: 26 }}>
-          <div className="col">
-            <label className="col-form-label">
-              <strong>Montant en TTC :&nbsp;{facture.mttc}</strong>
-            </label>
-          </div>
-        </div>
        
       </div>
     </div>
@@ -340,12 +321,10 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
   </div>
     <style>
               {`
-            @media print {
-              @page {
-                size: A4 portrait;
-                
-            }
-            }
+            @top-right {
+    content: "Page " counter(pageNumber);
+  }
+            
           `}
     </style>
 

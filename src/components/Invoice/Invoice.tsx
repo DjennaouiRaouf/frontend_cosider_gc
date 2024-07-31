@@ -96,7 +96,7 @@ const Invoice: React.FC<any> = () => {
 
     const getData = async(url:string) => {
         const contrat_id:string=encodeURIComponent(String(cid));
-       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getfacture/?contrat=${contrat_id}${url.replace('?',"&")}`,{
+       await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api_gc/getfacture/?contrat__numero=${contrat_id}${url.replace('?',"&")}`,{
       headers: {
         Authorization: `Token ${Cookies.get('token')}`,
         'Content-Type': 'application/json',
