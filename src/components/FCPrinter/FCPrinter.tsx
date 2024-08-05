@@ -321,10 +321,13 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
   </div>
     <style>
               {`
-            @top-right {
-    content: "Page " counter(pageNumber);
-  }
-            
+                @media print {
+                @page {
+                  size: A4 portrait;
+                  
+              }
+              }
+              
           `}
     </style>
 
