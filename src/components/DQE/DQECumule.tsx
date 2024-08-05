@@ -50,7 +50,6 @@ const DQECumule: React.FC<any> = () => {
     cellStyle: {textAlign: 'start', border: "none"},
 
   };
-
         const gridOptions:any = {
     pagination: true,
     defaultColDef:defaultColDefs,
