@@ -59,7 +59,6 @@ const DQECumule: React.FC<any> = () => {
       InfoRenderer: InfoRenderer,
     },
 
-
     localeText: {
       // Default pagination text
       page: 'Page',
