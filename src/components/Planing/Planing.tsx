@@ -128,10 +128,7 @@ const Planing: React.FC<any> = () => {
 
 
 
-       const handleRowClick = (event: any) => {
-        setSelectedRows(event.data);
-
-  };
+    
 
      useEffect(() => {
     const paramsArray = Array.from(searchParams.entries());
@@ -246,9 +243,23 @@ const Planing: React.FC<any> = () => {
       }
     }
 
+    
+    const [gridApi, setGridApi] = useState<any>(null);
+    const onGridReady = (params:any) => {
+        setGridApi(params.api);
+      };
+    
+    
+    
     const deletePlaning = () =>{
-        
+        console.log(selectedRows)
     }
+
+    const handleRowClick = () => {
+      const selected = gridApi.getSelectedRows();
+      setSelectedRows(selected)
+
+} ;
 
 
   return (
@@ -332,7 +343,7 @@ const Planing: React.FC<any> = () => {
 
 
                                   >
-                                    <AgGridReact ref={gridRef}
+                                    <AgGridReact ref={gridRef} onGridReady={onGridReady}
                                            suppressAggFuncInHeader={true}
 
                                            rowData={data} columnDefs={fields}

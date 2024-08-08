@@ -320,15 +320,16 @@ const FCPrinter: React.FC<FCPrinterProps> = (props) => {
   
   </div>
     <style>
+          
               {`
                 @media print {
                 @page {
                   size: A4 portrait;
                   
               }
-              }
-              
+              }   
           `}
+
     </style>
 
 
